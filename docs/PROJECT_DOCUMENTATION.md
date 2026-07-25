@@ -1,7 +1,7 @@
 # Subscription Leak Detector — Project Documentation
 
 **Version:** 1.0  
-**Last Updated:** 2026-07-25  
+**Last Updated:** 2026-07-26  
 **Status:** Active Development
 
 ---
@@ -39,6 +39,7 @@ A system that scans bank statement PDFs to automatically detect recurring subscr
 | Backend | Python, FastAPI, SQLAlchemy, SQLite |
 | Frontend | React 18, Vite, TypeScript, Tailwind CSS, shadcn/ui |
 | AI/ML | Google Gemini (recommendations), PyPDF2 (PDF parsing) |
+| SMS | Twilio (incoming SMS webhook) |
 | Auth | JWT (python-jose), bcrypt |
 | Data Fetching | TanStack Query, Axios |
 | State | Zustand (auth), TanStack Query (server state) |
@@ -56,10 +57,10 @@ A system that scans bank statement PDFs to automatically detect recurring subscr
 │         ForgotPassword, ResetPassword                        │
 ├─────────────────────────────────────────────────────────────┤
 │                        FastAPI                               │
-│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   │
-│  │  Auth    │  │  Upload  │  │ Analysis │  │  User    │   │
-│  │  Routes  │  │  Route   │  │  Route   │  │  Routes  │   │
-│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘   │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐   │
+│  │  Auth    │  │  Upload  │  │ Analysis │  │  User    │  │   SMS    │   │
+│  │  Routes  │  │  Route   │  │  Route   │  │  Routes  │  │ Webhook  │   │
+│  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘  └────┬─────┘   │
 │       │              │              │              │          │
 │  ┌────▼──────────────▼──────────────▼──────────────▼─────┐  │
 │  │              Repositories (SQLAlchemy)                 │  │
@@ -100,11 +101,13 @@ subscription-detector/
 │   │   ├── subscription.py      # Subscription CRUD + price matching
 │   │   ├── price_history.py     # Price history queries
 │   │   ├── password_reset.py    # Password reset token CRUD
-│   │   └── settings.py          # User settings CRUD
+│   │   ├── settings.py          # User settings CRUD
+│   │   └── sms.py               # SMS message CRUD + dedup
 │   ├── parsers/
 │   │   ├── pdf_parser.py        # PyPDF2 + Gemini Vision fallback
 │   │   ├── gemini_vision.py     # PDF-to-image → Gemini OCR
-│   │   └── email_parser.py      # Email body → transactions
+│   │   ├── email_parser.py      # Email body → transactions
+│   │   └── sms_parser.py        # SMS text → transaction data
 │   ├── extractors/
 │   │   └── transaction_extractor.py  # Regex transaction parsing
 │   ├── detectors/
@@ -115,6 +118,7 @@ subscription-detector/
 │   │   └── action_recommender.py  # Gemini-based recommendations
 │   ├── services/
 │   │   ├── email.py             # SMTP email sending
+│   │   ├── twilio.py            # Twilio SMS verify + send
 │   │   └── webhook.py           # Webhook signature verification
 │   └── utils/
 │       └── email.py             # Forwarding address parsing
@@ -166,6 +170,11 @@ SMTP_FROM=noreply@subguard.app
 # Webhook (Email Forwarding)
 INBOUND_WEBHOOK_SECRET=your-webhook-secret
 EMAIL_DOMAIN=subguard.app
+
+# Twilio (SMS Forwarding)
+TWILIO_ACCOUNT_SID=your_account_sid
+TWILIO_AUTH_TOKEN=your_auth_token
+TWILIO_PHONE_NUMBER=+15551234567
 ```
 
 ### 3.2 Dependencies
@@ -184,6 +193,7 @@ python-jose[cryptography]==3.3.0
 bcrypt==4.2.1
 pytest==8.3.3
 httpx==0.28.1
+requests
 ```
 
 ### 3.3 Core Pipeline
@@ -229,6 +239,10 @@ id, subscription_id (FK), amount, recorded_at, source_analysis_id (FK)
 
 # PasswordResetToken
 id, user_id (FK), token, expires_at, used, created_at
+
+# SmsMessage
+id, user_id (FK), message_sid (unique), sender, body, parsed_transactions (JSON),
+is_processed, created_at
 ```
 
 ### 3.6 Key Behaviors
@@ -338,6 +352,32 @@ id, user_id (FK), token, expires_at, used, created_at
 - Falls back to email body parsing if no attachments
 - Settings page shows forwarding address + setup instructions
 
+### 5.5 SMS Forwarding
+
+- Twilio webhook receives incoming SMS banking alerts at `/api/inbound-sms`
+- Twilio signature verification (HMAC-SHA1) on all inbound requests
+- Message deduplication via Twilio `MessageSid` to prevent reprocessing
+- SMS text parsed by `sms_parser` to extract transaction data (amount, merchant, date)
+- Parsed transactions feed into the same intelligence engine as PDF uploads
+- Results stored with full user isolation (matched by Twilio "To" number)
+- Manual SMS upload also available at `POST /api/upload-sms` (auth required)
+- Rate limiting applied per-user on both webhook and manual upload paths
+
+**Twilio Environment Variables:**
+
+```env
+TWILIO_ACCOUNT_SID=your_account_sid
+TWILIO_AUTH_TOKEN=your_auth_token
+TWILIO_PHONE_NUMBER=+15551234567
+```
+
+**Setup:**
+
+1. Purchase a Twilio phone number
+2. Set the SMS webhook URL to `https://your-domain.com/api/inbound-sms` (HTTP POST)
+3. Configure the above environment variables in `.env`
+4. Users register their phone number in settings for automatic routing
+
 ---
 
 ## 6. API Reference
@@ -378,6 +418,13 @@ id, user_id (FK), token, expires_at, used, created_at
 | Method | Endpoint | Auth | Description |
 |--------|----------|------|-------------|
 | POST | `/api/inbound-email` | Webhook signature | Receive bank statement emails |
+| POST | `/api/inbound-sms` | Twilio signature | Receive incoming SMS banking alerts |
+
+### SMS
+
+| Method | Endpoint | Auth | Description |
+|--------|----------|------|-------------|
+| POST | `/api/upload-sms` | Yes | Submit SMS text for analysis |
 
 ---
 
