@@ -7,18 +7,18 @@ interface ActionBadgeProps {
 }
 
 const actionStyles: Record<Action, string> = {
-  keep: "bg-success/10 text-success",
-  review: "bg-warning/10 text-warning",
-  downgrade: "bg-orange-100 text-orange-700",
-  renegotiate: "bg-accent/10 text-accent",
-  cancel: "bg-danger/10 text-danger",
+  keep: "bg-green-100 text-green-800 border-green-200",
+  review: "bg-yellow-100 text-yellow-800 border-yellow-200",
+  downgrade: "bg-orange-100 text-orange-800 border-orange-200",
+  renegotiate: "bg-blue-100 text-blue-800 border-blue-200",
+  cancel: "bg-red-100 text-red-800 border-red-200",
 };
 
 export function ActionBadge({ action }: ActionBadgeProps) {
   return (
     <Badge
       variant="outline"
-      className={cn("capitalize rounded-full border-none px-2.5 py-0.5 font-semibold", actionStyles[action])}
+      className={cn("capitalize", actionStyles[action])}
     >
       {action}
     </Badge>

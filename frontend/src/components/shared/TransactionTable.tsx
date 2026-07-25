@@ -74,106 +74,101 @@ export function TransactionTable({ transactions }: TransactionTableProps) {
   };
 
   return (
-    <Card className="rounded-2xl border-slate-200/60 shadow-sm hover:shadow-md transition-shadow duration-300">
-      <CardHeader className="flex flex-row items-center justify-between pb-4 pt-6 px-6 border-b border-slate-100">
-        <CardTitle className="text-xl font-semibold text-primary">All Transactions ({transactions.length})</CardTitle>
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-lg">All Transactions ({transactions.length})</CardTitle>
       </CardHeader>
-      <CardContent className="p-0">
-        <div className="flex flex-col sm:flex-row gap-4 p-6 bg-slate-50/30 border-b border-slate-100">
+      <CardContent>
+        <div className="flex flex-wrap gap-3 mb-4">
           <div className="relative flex-1 min-w-[200px]">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Search transactions..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 h-11 rounded-xl border-slate-200 shadow-sm focus-visible:ring-accent"
+              className="pl-8"
             />
           </div>
-          <div className="flex gap-3 sm:w-auto w-full">
-            <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-              <SelectTrigger className="h-11 w-full sm:w-[160px] rounded-xl border-slate-200 shadow-sm focus:ring-accent">
-                <SelectValue placeholder="Category" />
-              </SelectTrigger>
-              <SelectContent className="rounded-xl shadow-lg border-slate-100">
-                <SelectItem value="all">All Categories</SelectItem>
-                {categories.map((cat) => (
-                  <SelectItem key={cat} value={cat || "other"}>
-                    <span className="capitalize">{cat || "other"}</span>
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            <Select value={recurringFilter} onValueChange={setRecurringFilter}>
-              <SelectTrigger className="h-11 w-full sm:w-[140px] rounded-xl border-slate-200 shadow-sm focus:ring-accent">
-                <SelectValue placeholder="Recurring" />
-              </SelectTrigger>
-              <SelectContent className="rounded-xl shadow-lg border-slate-100">
-                <SelectItem value="all">All</SelectItem>
-                <SelectItem value="yes">Recurring</SelectItem>
-                <SelectItem value="no">One-time</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
+          <Select value={categoryFilter} onValueChange={setCategoryFilter}>
+            <SelectTrigger className="w-[150px]">
+              <SelectValue placeholder="Category" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All Categories</SelectItem>
+              {categories.map((cat) => (
+                <SelectItem key={cat} value={cat || "other"}>
+                  {cat || "other"}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select value={recurringFilter} onValueChange={setRecurringFilter}>
+            <SelectTrigger className="w-[130px]">
+              <SelectValue placeholder="Recurring" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="yes">Recurring</SelectItem>
+              <SelectItem value="no">One-time</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
 
-        <div className="max-h-[500px] overflow-auto custom-scrollbar">
+        <div className="rounded-md border max-h-[400px] overflow-auto">
           <Table>
-            <TableHeader className="bg-slate-50/80 sticky top-0 z-10 backdrop-blur-sm">
-              <TableRow className="border-slate-100 hover:bg-transparent">
+            <TableHeader>
+              <TableRow>
                 <TableHead
-                  className="px-6 py-4 font-medium text-slate-500 text-xs uppercase tracking-wider cursor-pointer hover:text-primary transition-colors whitespace-nowrap"
+                  className="cursor-pointer hover:bg-muted"
                   onClick={() => toggleSort("date")}
                 >
-                  <div className="flex items-center">Date <SortIcon field="date" /></div>
+                  Date <SortIcon field="date" />
                 </TableHead>
                 <TableHead
-                  className="px-6 py-4 font-medium text-slate-500 text-xs uppercase tracking-wider cursor-pointer hover:text-primary transition-colors"
+                  className="cursor-pointer hover:bg-muted"
                   onClick={() => toggleSort("description")}
                 >
-                  <div className="flex items-center">Description <SortIcon field="description" /></div>
+                  Description <SortIcon field="description" />
                 </TableHead>
                 <TableHead
-                  className="px-6 py-4 font-medium text-slate-500 text-xs uppercase tracking-wider cursor-pointer hover:text-primary transition-colors text-right"
+                  className="cursor-pointer hover:bg-muted text-right"
                   onClick={() => toggleSort("amount")}
                 >
-                  <div className="flex items-center justify-end">Amount <SortIcon field="amount" /></div>
+                  Amount <SortIcon field="amount" />
                 </TableHead>
-                <TableHead className="px-6 py-4 font-medium text-slate-500 text-xs uppercase tracking-wider">Category</TableHead>
-                <TableHead className="px-6 py-4 font-medium text-slate-500 text-xs uppercase tracking-wider text-center">Recurring</TableHead>
+                <TableHead>Category</TableHead>
+                <TableHead>Recurring</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filtered.length === 0 ? (
                 <TableRow>
-                  <TableCell colSpan={5} className="py-12 text-center text-slate-500">
-                    <div className="flex flex-col items-center justify-center">
-                      <Search className="h-8 w-8 text-slate-300 mb-2" />
-                      <p>No transactions found matching your criteria</p>
-                    </div>
+                  <TableCell colSpan={5} className="text-center text-muted-foreground">
+                    No transactions found
                   </TableCell>
                 </TableRow>
               ) : (
                 filtered.map((t) => (
-                  <TableRow key={t.id} className="border-slate-100 hover:bg-slate-50/50 transition-colors">
-                    <TableCell className="px-6 py-4 font-medium text-slate-600 whitespace-nowrap">
-                      {new Date(t.date).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}
+                  <TableRow key={t.id}>
+                    <TableCell className="font-mono text-sm">
+                      {new Date(t.date).toLocaleDateString()}
                     </TableCell>
-                    <TableCell className="px-6 py-4 text-slate-700 font-medium">{t.description}</TableCell>
-                    <TableCell className="px-6 py-4 text-right font-semibold text-primary whitespace-nowrap">
+                    <TableCell>{t.description}</TableCell>
+                    <TableCell className="text-right font-mono">
                       ${t.amount.toFixed(2)}
                     </TableCell>
-                    <TableCell className="px-6 py-4">
-                      <Badge variant="outline" className="rounded-full px-2.5 py-0.5 border-none bg-accent/10 text-accent font-medium capitalize whitespace-nowrap">
+                    <TableCell>
+                      <Badge variant="outline" className="text-xs">
                         {t.category || "other"}
                       </Badge>
                     </TableCell>
-                    <TableCell className="px-6 py-4 text-center">
+                    <TableCell>
                       {t.is_recurring ? (
-                        <Badge variant="default" className="rounded-full px-2.5 py-0.5 border-none bg-success/10 text-success hover:bg-success/20 font-medium">
+                        <Badge variant="default" className="bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200 text-xs">
                           Yes
                         </Badge>
                       ) : (
-                        <span className="text-slate-400 text-sm font-medium">No</span>
+                        <span className="text-muted-foreground text-xs">No</span>
                       )}
                     </TableCell>
                   </TableRow>

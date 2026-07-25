@@ -1,9 +1,6 @@
 import os
 import json
-try:
-    import google.generativeai as genai
-except ImportError:
-    genai = None
+import google.generativeai as genai
 from typing import List
 from dotenv import load_dotenv
 from app.models import Subscription
@@ -33,7 +30,7 @@ def build_summary_prompt(subscriptions: List[Subscription], total_monthly: float
 def generate_ai_summary(subscriptions: List[Subscription], total_monthly: float) -> str:
     """Generate AI summary using Gemini, with fallback to template."""
     api_key = os.getenv("GEMINI_API_KEY")
-    if not api_key or api_key == "your_api_key_here" or genai is None:
+    if not api_key or api_key == "your_api_key_here":
         return _template_summary(subscriptions, total_monthly)
 
     try:

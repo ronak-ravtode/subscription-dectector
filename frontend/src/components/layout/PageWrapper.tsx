@@ -1,25 +1,18 @@
 import { Navbar } from "./Navbar";
-import { ReactNode } from "react";
 
 interface PageWrapperProps {
-  children: ReactNode;
+  children: React.ReactNode;
   title?: string;
-  hero?: ReactNode;
 }
 
-export function PageWrapper({ children, title, hero }: PageWrapperProps) {
+export function PageWrapper({ children, title }: PageWrapperProps) {
   return (
-    <div className="flex min-h-screen flex-col bg-background">
+    <div className="flex min-h-screen flex-col">
       <Navbar />
-      {hero && (
-        <div className="w-full mt-4">
-          {hero}
-        </div>
-      )}
-      <main className="flex-1 flex flex-col items-center w-full mt-4">
-        <div className="w-full max-w-[1440px] px-4 md:px-8 py-8 md:py-12">
+      <main className="flex-1">
+        <div className="container mx-auto px-4 py-8">
           {title && (
-            <h1 className="mb-2 text-4xl font-bold tracking-tight text-primary md:text-[44px] leading-tight">
+            <h1 className="mb-6 text-3xl font-bold tracking-tight">
               {title}
             </h1>
           )}
