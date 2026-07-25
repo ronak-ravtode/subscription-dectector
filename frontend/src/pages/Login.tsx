@@ -40,8 +40,8 @@ export default function Login() {
             />
 
             <div className="space-y-1.5">
-              <div className="flex justify-end">
-                <Link to="/forgot-password" className="text-[13px] font-medium text-[#2563EB] hover:text-[#0F172A] transition-colors">
+              <div className="flex justify-end mt-1 mb-2">
+                <Link to="/forgot-password" className="text-[13px] font-medium text-primary hover:text-foreground transition-colors">
                   Forgot password?
                 </Link>
               </div>
@@ -58,7 +58,7 @@ export default function Login() {
             </div>
 
             {loginMutation.isError && (
-              <p className="text-[14px] font-medium text-[#E11D48] bg-[#FFE4E6] p-3 rounded-lg border border-[#FDA4AF]">
+              <p className="text-[14px] font-medium text-destructive bg-destructive/10 p-3 rounded-lg border border-destructive/20">
                 {(loginMutation.error as any)?.response?.data?.detail || "Login failed. Please check your credentials."}
               </p>
             )}
@@ -68,10 +68,10 @@ export default function Login() {
             {loginMutation.isPending ? "Signing in..." : "Sign In"}
           </AuthButton>
 
-          <p className="text-center text-[14px] text-[#64748B] mt-6">
+          <p className="text-center text-[14px] text-muted-foreground mt-6">
             Don't have an account?{" "}
-            <Link to="/register" className="font-semibold text-[#2563EB] hover:text-[#0F172A] transition-colors">
-              Sign Up
+            <Link to="/register" className="font-semibold text-primary hover:text-foreground transition-colors">
+              Create one
             </Link>
           </p>
         </form>

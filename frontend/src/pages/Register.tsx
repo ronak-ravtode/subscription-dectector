@@ -76,7 +76,7 @@ export default function Register() {
             />
 
             {(error || registerMutation.isError) && (
-              <p className="text-[14px] font-medium text-[#E11D48] bg-[#FFE4E6] p-3 rounded-lg border border-[#FDA4AF]">
+              <p className="text-[14px] font-medium text-destructive bg-destructive/10 p-3 rounded-lg border border-destructive/20">
                 {error || (registerMutation.error as any)?.response?.data?.detail || "Registration failed. Please try again."}
               </p>
             )}
@@ -86,10 +86,10 @@ export default function Register() {
             {registerMutation.isPending ? "Creating account..." : "Create Account"}
           </AuthButton>
 
-          <p className="text-center text-[14px] text-[#64748B] mt-6">
+          <p className="text-center text-[14px] text-muted-foreground mt-6">
             Already have an account?{" "}
-            <Link to="/login" className="font-semibold text-[#2563EB] hover:text-[#0F172A] transition-colors">
-              Sign In
+            <Link to="/login" className="font-semibold text-primary hover:text-foreground transition-colors">
+              Sign in
             </Link>
           </p>
         </form>

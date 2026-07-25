@@ -28,15 +28,15 @@ export function AiSummaryCard({ analysis, isLoading }: AiSummaryCardProps) {
 
   if (!analysis?.ai_summary) {
     return (
-      <Card className="rounded-2xl border-slate-200/60 bg-white shadow-sm">
+      <Card className="rounded-2xl border-border bg-card shadow-sm">
         <CardHeader className="flex flex-row items-center gap-3 pb-2 pt-6 px-6 space-y-0">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-slate-100">
-            <Sparkles className="h-5 w-5 text-slate-400" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-secondary">
+            <Sparkles className="h-5 w-5 text-muted-foreground" />
           </div>
           <CardTitle className="text-lg font-semibold text-primary">AI Insights</CardTitle>
         </CardHeader>
         <CardContent className="px-6 pb-6 pt-2 ml-[52px]">
-          <p className="text-slate-500 text-base leading-relaxed">
+          <p className="text-muted-foreground text-base leading-relaxed">
             Upload more statements for AI-powered insights about your spending patterns.
           </p>
         </CardContent>
@@ -53,7 +53,7 @@ export function AiSummaryCard({ analysis, isLoading }: AiSummaryCardProps) {
         <CardTitle className="text-lg font-semibold text-primary">AI Insights</CardTitle>
       </CardHeader>
       <CardContent className="px-6 pb-6 pt-2 ml-[52px]">
-        <p className="text-base text-slate-700 leading-relaxed font-medium">{analysis.ai_summary}</p>
+        <p className="text-base text-foreground leading-relaxed font-medium">{analysis.ai_summary}</p>
       </CardContent>
     </Card>
   );

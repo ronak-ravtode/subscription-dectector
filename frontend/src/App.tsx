@@ -12,6 +12,8 @@ import Settings from "@/pages/Settings";
 import ForgotPassword from "@/pages/ForgotPassword";
 import ResetPassword from "@/pages/ResetPassword";
 
+import { ThemeProvider } from "@/components/theme-provider";
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -23,65 +25,67 @@ const queryClient = new QueryClient({
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/forgot-password" element={<ForgotPassword />} />
-          <Route path="/reset-password" element={<ResetPassword />} />
-          <Route
-            path="/"
-            element={
-              <AuthGuard>
-                <Dashboard />
-              </AuthGuard>
-            }
-          />
-          <Route
-            path="/upload"
-            element={
-              <AuthGuard>
-                <Upload />
-              </AuthGuard>
-            }
-          />
-          <Route
-            path="/analysis/:id"
-            element={
-              <AuthGuard>
-                <Analysis />
-              </AuthGuard>
-            }
-          />
-          <Route
-            path="/subscriptions"
-            element={
-              <AuthGuard>
-                <Subscriptions />
-              </AuthGuard>
-            }
-          />
-          <Route
-            path="/history"
-            element={
-              <AuthGuard>
-                <History />
-              </AuthGuard>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <AuthGuard>
-                <Settings />
-              </AuthGuard>
-            }
-          />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </BrowserRouter>
-    </QueryClientProvider>
+    <ThemeProvider defaultTheme="system" storageKey="subguard-theme">
+      <QueryClientProvider client={queryClient}>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
+            <Route
+              path="/"
+              element={
+                <AuthGuard>
+                  <Dashboard />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/upload"
+              element={
+                <AuthGuard>
+                  <Upload />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/analysis/:id"
+              element={
+                <AuthGuard>
+                  <Analysis />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/subscriptions"
+              element={
+                <AuthGuard>
+                  <Subscriptions />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/history"
+              element={
+                <AuthGuard>
+                  <History />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <AuthGuard>
+                  <Settings />
+                </AuthGuard>
+              }
+            />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </QueryClientProvider>
+    </ThemeProvider>
   );
 }
 

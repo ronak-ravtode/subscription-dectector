@@ -18,7 +18,7 @@ export const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(
           ref={ref}
           type={inputType}
           placeholder=" "
-          className={`peer w-full h-full bg-white border border-[#E2E8F0] rounded-[12px] px-4 pt-4 pb-1 text-[16px] text-[#0F172A] placeholder-transparent transition-all duration-200 outline-none focus:border-[#2563EB] focus:ring-4 focus:ring-[#2563EB]/10 disabled:opacity-50 disabled:cursor-not-allowed [&:-webkit-autofill]:shadow-[0_0_0_1000px_white_inset] [&:-webkit-autofill]:-webkit-text-fill-color-[#0F172A] ${
+          className={`peer w-full h-full bg-background border border-border rounded-[12px] px-4 pt-4 pb-1 text-[16px] text-foreground placeholder-transparent transition-all duration-200 outline-none focus:border-primary focus:ring-4 focus:ring-primary/10 disabled:opacity-50 disabled:cursor-not-allowed [&:-webkit-autofill]:shadow-[0_0_0_1000px_hsl(var(--background))_inset] [&:-webkit-autofill]:-webkit-text-fill-color-[hsl(var(--foreground))] ${
             icon ? "pl-11" : ""
           } ${isPassword ? "pr-11" : ""} ${className || ""}`}
           {...props}
@@ -26,9 +26,9 @@ export const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(
         
         {/* Floating Label */}
         <label
-          className={`absolute top-1 text-[11px] font-medium text-[#64748B] transition-all duration-200 pointer-events-none 
-          peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-[16px] peer-placeholder-shown:text-[#94A3B8] 
-          peer-focus:top-1 peer-focus:text-[11px] peer-focus:text-[#2563EB]
+          className={`absolute top-1 text-[11px] font-medium text-muted-foreground/70 transition-all duration-200 pointer-events-none 
+          peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-[16px] peer-placeholder-shown:text-muted-foreground 
+          peer-focus:top-1 peer-focus:text-[11px] peer-focus:text-primary
           ${icon ? "left-11" : "left-4"}`}
         >
           {label}
@@ -36,7 +36,7 @@ export const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(
 
         {/* Leading Icon */}
         {icon && (
-          <div className="absolute left-4 top-[14px] text-[#94A3B8] pointer-events-none peer-focus:text-[#2563EB] transition-colors">
+          <div className="absolute left-4 top-[14px] text-muted-foreground pointer-events-none peer-focus:text-primary transition-colors">
             {icon}
           </div>
         )}
@@ -46,7 +46,7 @@ export const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(
           <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute right-4 top-[14px] text-[#94A3B8] hover:text-[#0F172A] transition-colors focus:outline-none rounded-full p-0.5 focus-visible:ring-2 focus-visible:ring-[#2563EB]"
+            className="absolute right-4 top-[14px] text-muted-foreground hover:text-foreground transition-colors focus:outline-none rounded-full p-0.5 focus-visible:ring-2 focus-visible:ring-primary"
             aria-label={showPassword ? "Hide password" : "Show password"}
           >
             {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}

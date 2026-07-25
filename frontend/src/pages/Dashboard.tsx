@@ -80,7 +80,7 @@ export default function Dashboard() {
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 mb-10">
-        <Card className="rounded-2xl border-slate-200/60 shadow-sm hover:shadow-md transition-shadow duration-300">
+        <Card className="rounded-2xl border-border shadow-sm hover:shadow-md transition-shadow duration-300">
           <CardHeader className="pb-2 pt-6 px-6">
             <CardTitle className="text-xl font-semibold text-primary">Spending by Category</CardTitle>
           </CardHeader>
@@ -88,7 +88,7 @@ export default function Dashboard() {
             <CategoryPieChart data={categoryData} />
           </CardContent>
         </Card>
-        <Card className="rounded-2xl border-slate-200/60 shadow-sm hover:shadow-md transition-shadow duration-300">
+        <Card className="rounded-2xl border-border shadow-sm hover:shadow-md transition-shadow duration-300">
           <CardHeader className="pb-2 pt-6 px-6">
             <CardTitle className="text-xl font-semibold text-primary">Monthly Spending Trend</CardTitle>
           </CardHeader>
@@ -102,8 +102,8 @@ export default function Dashboard() {
         </Card>
       </div>
 
-      <Card className="rounded-2xl border-slate-200/60 shadow-sm hover:shadow-md transition-shadow duration-300 mb-8">
-        <CardHeader className="flex flex-row items-center justify-between py-5 px-6 border-b border-slate-100">
+      <Card className="rounded-2xl border-border shadow-sm hover:shadow-md transition-shadow duration-300 mb-8">
+        <CardHeader className="flex flex-row items-center justify-between py-5 px-6 border-b border-border/60">
           <CardTitle className="text-xl font-semibold text-primary">Recent Analyses</CardTitle>
           <Button variant="ghost" size="sm" asChild className="text-accent hover:text-accent hover:bg-accent/10 rounded-lg">
             <Link to="/history">
@@ -120,38 +120,38 @@ export default function Dashboard() {
             </div>
           ) : history?.analyses && history.analyses.length > 0 ? (
             <Table>
-              <TableHeader className="bg-slate-50/50">
-                <TableRow className="border-slate-100 hover:bg-transparent">
-                  <TableHead className="px-6 py-4 font-medium text-slate-500">Date</TableHead>
-                  <TableHead className="px-6 py-4 font-medium text-slate-500">Status</TableHead>
-                  <TableHead className="px-6 py-4 font-medium text-slate-500">Monthly Leak</TableHead>
-                  <TableHead className="px-6 py-4 font-medium text-slate-500">Score</TableHead>
-                  <TableHead className="px-6 py-4 font-medium text-slate-500">Subscriptions</TableHead>
+              <TableHeader className="bg-secondary/50">
+                <TableRow className="border-border/60 hover:bg-transparent">
+                  <TableHead className="px-6 py-4 font-medium text-muted-foreground">Date</TableHead>
+                  <TableHead className="px-6 py-4 font-medium text-muted-foreground">Status</TableHead>
+                  <TableHead className="px-6 py-4 font-medium text-muted-foreground">Monthly Leak</TableHead>
+                  <TableHead className="px-6 py-4 font-medium text-muted-foreground">Score</TableHead>
+                  <TableHead className="px-6 py-4 font-medium text-muted-foreground">Subscriptions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {history.analyses.map((item) => (
-                  <TableRow key={item.analysis_id} className="border-slate-100 hover:bg-slate-50/50 transition-colors">
-                    <TableCell className="px-6 py-4 text-slate-700">{formatDate(item.created_at)}</TableCell>
+                  <TableRow key={item.analysis_id} className="border-border/60 hover:bg-secondary/50 transition-colors">
+                    <TableCell className="px-6 py-4 text-foreground">{formatDate(item.created_at)}</TableCell>
                     <TableCell className="px-6 py-4">
-                      <span className="capitalize text-slate-600 font-medium">{item.status}</span>
+                      <span className="capitalize text-muted-foreground font-medium">{item.status}</span>
                     </TableCell>
                     <TableCell className="px-6 py-4 font-semibold text-primary">{formatCurrency(item.total_monthly_leak)}</TableCell>
                     <TableCell className="px-6 py-4">
                       <ScoreBadge score={item.overall_score} />
                     </TableCell>
-                    <TableCell className="px-6 py-4 text-slate-600">{item.subscription_count}</TableCell>
+                    <TableCell className="px-6 py-4 text-muted-foreground">{item.subscription_count}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           ) : (
             <div className="flex flex-col items-center justify-center py-12 text-center">
-              <div className="h-12 w-12 rounded-full bg-slate-100 flex items-center justify-center mb-3">
-                <Upload className="h-6 w-6 text-slate-400" />
+              <div className="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mb-3">
+                <Upload className="h-6 w-6 text-muted-foreground/60" />
               </div>
               <h3 className="text-lg font-medium text-primary">No analyses yet</h3>
-              <p className="text-slate-500 mt-1 max-w-sm">
+              <p className="text-muted-foreground mt-1 max-w-sm">
                 Upload your first bank statement to start detecting subscription leaks.
               </p>
             </div>

@@ -28,7 +28,7 @@ function PriceHistorySubDetail({ subscriptionId }: { subscriptionId: string }) {
   if (!priceHistory) return null;
 
   return (
-    <div className="p-4 bg-slate-50/50 rounded-xl m-4 border border-slate-100 shadow-inner">
+    <div className="p-4 bg-secondary/50 rounded-xl m-4 border border-border/60 shadow-inner">
       <PriceHistoryChart
         snapshots={priceHistory.snapshots}
         monthlyAggregates={priceHistory.monthly_aggregates}
@@ -69,10 +69,10 @@ export default function Analysis() {
   if (error || !analysis) {
     return (
       <PageWrapper>
-        <Card className="rounded-2xl border-slate-200/60 shadow-sm">
+        <Card className="rounded-2xl border-border shadow-sm">
           <CardContent className="py-16 flex flex-col items-center justify-center text-center">
-            <FileText className="h-12 w-12 text-slate-300 mb-4" />
-            <p className="text-lg font-medium text-slate-600">
+            <FileText className="h-12 w-12 text-muted-foreground/30 mb-4" />
+            <p className="text-lg font-medium text-muted-foreground">
               Analysis not found or failed to load.
             </p>
           </CardContent>
@@ -83,14 +83,14 @@ export default function Analysis() {
 
   return (
     <PageWrapper title="Analysis Results">
-      <p className="mb-10 text-slate-500 text-base md:text-lg">
+      <p className="mb-10 text-muted-foreground text-base md:text-lg">
         Your subscription analysis overview
       </p>
 
       <div className="grid gap-6 md:grid-cols-3 mb-8">
-        <Card className="rounded-2xl border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 bg-white">
+        <Card className="rounded-2xl border-border shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 bg-card">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-6 pt-6">
-            <CardTitle className="text-base font-medium text-slate-500">Overall Score</CardTitle>
+            <CardTitle className="text-base font-medium text-muted-foreground">Overall Score</CardTitle>
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/10">
               <TrendingUp className="h-5 w-5 text-accent" />
             </div>
@@ -98,11 +98,11 @@ export default function Analysis() {
           <CardContent className="px-6 pb-6 pt-2">
             <div className="flex items-baseline gap-1 mb-3">
               <span className="text-4xl font-bold text-primary tracking-tight">{analysis.overall_score}</span>
-              <span className="text-sm font-medium text-slate-400">/100</span>
+              <span className="text-sm font-medium text-muted-foreground">/100</span>
             </div>
             <Progress
               value={analysis.overall_score}
-              className="h-2 w-full bg-slate-100"
+              className="h-2 w-full bg-secondary"
               indicatorClassName={
                 analysis.overall_score <= 30 ? "bg-success" :
                 analysis.overall_score <= 60 ? "bg-warning" :
@@ -113,9 +113,9 @@ export default function Analysis() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 bg-white">
+        <Card className="rounded-2xl border-border shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 bg-card">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-6 pt-6">
-            <CardTitle className="text-base font-medium text-slate-500">Monthly Leak</CardTitle>
+            <CardTitle className="text-base font-medium text-muted-foreground">Monthly Leak</CardTitle>
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-success/10">
               <DollarSign className="h-5 w-5 text-success" />
             </div>
@@ -130,9 +130,9 @@ export default function Analysis() {
           </CardContent>
         </Card>
 
-        <Card className="rounded-2xl border-slate-200/60 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 bg-white">
+        <Card className="rounded-2xl border-border shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 bg-card">
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2 px-6 pt-6">
-            <CardTitle className="text-base font-medium text-slate-500">Subscriptions Found</CardTitle>
+            <CardTitle className="text-base font-medium text-muted-foreground">Subscriptions Found</CardTitle>
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-purple-100">
               <Package className="h-5 w-5 text-purple-600" />
             </div>
@@ -153,7 +153,7 @@ export default function Analysis() {
 
       {categoryData.length > 0 && (
         <div className="grid gap-6 md:grid-cols-2 mb-8">
-          <Card className="rounded-2xl border-slate-200/60 shadow-sm hover:shadow-md transition-shadow duration-300">
+          <Card className="rounded-2xl border-border shadow-sm hover:shadow-md transition-shadow duration-300">
             <CardHeader className="pb-2 pt-6 px-6">
               <CardTitle className="text-xl font-semibold text-primary">Category Breakdown</CardTitle>
             </CardHeader>
@@ -165,39 +165,39 @@ export default function Analysis() {
         </div>
       )}
 
-      <Card className="mb-8 rounded-2xl border-slate-200/60 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-col">
-        <CardHeader className="pb-4 pt-6 px-6 border-b border-slate-100">
+      <Card className="mb-8 rounded-2xl border-border shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-col">
+        <CardHeader className="pb-4 pt-6 px-6 border-b border-border/60">
           <CardTitle className="text-xl font-semibold text-primary">Subscriptions</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           {analysis.subscriptions.length === 0 ? (
             <div className="py-12 flex flex-col items-center justify-center">
-              <Package className="h-10 w-10 text-slate-300 mb-3" />
-              <p className="text-center text-slate-500 font-medium">
+              <Package className="h-10 w-10 text-muted-foreground/30 mb-3" />
+              <p className="text-center text-muted-foreground font-medium">
                 No subscriptions detected in this analysis.
               </p>
             </div>
           ) : (
             <Table>
-              <TableHeader className="bg-slate-50/50">
-                <TableRow className="border-slate-100 hover:bg-transparent">
-                  <TableHead className="px-6 py-4 font-medium text-slate-500 text-xs uppercase tracking-wider">Merchant</TableHead>
-                  <TableHead className="px-6 py-4 font-medium text-slate-500 text-xs uppercase tracking-wider">Amount</TableHead>
-                  <TableHead className="px-6 py-4 font-medium text-slate-500 text-xs uppercase tracking-wider">Frequency</TableHead>
-                  <TableHead className="px-6 py-4 font-medium text-slate-500 text-xs uppercase tracking-wider">Score</TableHead>
-                  <TableHead className="px-6 py-4 font-medium text-slate-500 text-xs uppercase tracking-wider">Action</TableHead>
+              <TableHeader className="bg-secondary/50">
+                <TableRow className="border-border/60 hover:bg-transparent">
+                  <TableHead className="px-6 py-4 font-medium text-muted-foreground text-xs uppercase tracking-wider">Merchant</TableHead>
+                  <TableHead className="px-6 py-4 font-medium text-muted-foreground text-xs uppercase tracking-wider">Amount</TableHead>
+                  <TableHead className="px-6 py-4 font-medium text-muted-foreground text-xs uppercase tracking-wider">Frequency</TableHead>
+                  <TableHead className="px-6 py-4 font-medium text-muted-foreground text-xs uppercase tracking-wider">Score</TableHead>
+                  <TableHead className="px-6 py-4 font-medium text-muted-foreground text-xs uppercase tracking-wider">Action</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {analysis.subscriptions.map((sub) => (
                   <React.Fragment key={sub.id}>
                     <TableRow
-                      className="cursor-pointer border-slate-100 hover:bg-slate-50/80 transition-colors"
+                      className="cursor-pointer border-border/60 hover:bg-secondary/80 transition-colors"
                       onClick={() => setExpandedSubId(expandedSubId === sub.id ? null : sub.id)}
                     >
-                      <TableCell className="px-6 py-4 font-semibold text-slate-700">{sub.merchant}</TableCell>
+                      <TableCell className="px-6 py-4 font-semibold text-foreground">{sub.merchant}</TableCell>
                       <TableCell className="px-6 py-4 font-medium text-primary">{formatCurrency(sub.amount)}</TableCell>
-                      <TableCell className="px-6 py-4 capitalize text-slate-600">{sub.frequency}</TableCell>
+                      <TableCell className="px-6 py-4 capitalize text-muted-foreground">{sub.frequency}</TableCell>
                       <TableCell className="px-6 py-4">
                         <ScoreBadge score={sub.leak_score} />
                       </TableCell>
@@ -206,7 +206,7 @@ export default function Analysis() {
                       </TableCell>
                     </TableRow>
                     {expandedSubId === sub.id && (
-                      <TableRow className="border-slate-100 bg-slate-50/30 hover:bg-slate-50/30">
+                      <TableRow className="border-border/60 bg-secondary/30 hover:bg-secondary/30">
                         <TableCell colSpan={5} className="p-0">
                           <PriceHistorySubDetail subscriptionId={sub.id} />
                         </TableCell>

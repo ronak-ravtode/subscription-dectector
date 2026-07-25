@@ -12,9 +12,9 @@ export const AuthButton = React.forwardRef<HTMLButtonElement, AuthButtonProps>(
       <button
         ref={ref}
         disabled={isLoading || disabled}
-        className={`w-full h-[52px] bg-[#0F172A] text-white rounded-[12px] text-[16px] font-medium 
-        transition-all duration-200 ease-out hover:-translate-y-[1px] hover:shadow-[0_4px_12px_rgb(15,23,42,0.15)] 
-        active:translate-y-[1px] active:shadow-none focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:ring-offset-2
+        className={`w-full h-[52px] bg-primary text-primary-foreground rounded-[12px] text-[16px] font-medium 
+        transition-all duration-200 ease-out hover:-translate-y-[1px] hover:shadow-md 
+        active:translate-y-[1px] active:shadow-none focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background
         disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:translate-y-0 disabled:hover:shadow-none relative overflow-hidden ${className || ""}`}
         {...props}
       >

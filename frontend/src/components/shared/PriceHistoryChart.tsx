@@ -66,13 +66,13 @@ export function PriceHistoryChart({
         />
         {showAggregates ? (
           <>
-            <Line type="monotone" dataKey="avg" stroke="#3b82f6" strokeWidth={2} dot={false} name="Average" />
-            <Line type="monotone" dataKey="min" stroke="#22c55e" strokeWidth={1} strokeDasharray="5 5" dot={false} name="Min" />
-            <Line type="monotone" dataKey="max" stroke="#ef4444" strokeWidth={1} strokeDasharray="5 5" dot={false} name="Max" />
+            <Line type="monotone" dataKey="avg" stroke="hsl(var(--primary))" strokeWidth={2} dot={false} name="Average" />
+            <Line type="monotone" dataKey="min" stroke="hsl(var(--success))" strokeWidth={1} strokeDasharray="5 5" dot={false} name="Min" />
+            <Line type="monotone" dataKey="max" stroke="hsl(var(--destructive))" strokeWidth={1} strokeDasharray="5 5" dot={false} name="Max" />
             <Legend />
           </>
         ) : (
-          <Line type="monotone" dataKey="amount" stroke="#3b82f6" strokeWidth={2} dot={{ fill: "#3b82f6" }} />
+          <Line type="monotone" dataKey="amount" stroke="hsl(var(--primary))" strokeWidth={2} dot={{ fill: "hsl(var(--primary))" }} />
         )}
       </LineChart>
     </ResponsiveContainer>

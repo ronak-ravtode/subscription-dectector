@@ -18,20 +18,20 @@ export function DashboardHero() {
     <motion.div 
       ref={containerRef}
       style={{ opacity, y }}
-      className="relative w-full min-h-[750px] bg-white overflow-hidden flex items-center justify-center pt-24 pb-16 px-4 md:px-8 border-b border-slate-100"
+      className="relative w-full min-h-[750px] bg-background overflow-hidden flex items-center justify-center pt-24 pb-16 px-4 md:px-8 border-b border-border/60"
     >
       {/* Background Typography */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none select-none flex items-center justify-center">
-        <div className="absolute top-[10%] left-[-5%] text-[14vw] font-black text-slate-900/[0.03] leading-none tracking-tighter mix-blend-multiply filter blur-[1px]">
+        <div className="absolute top-[10%] left-[-5%] text-[14vw] font-black text-foreground/[0.03] leading-none tracking-tighter mix-blend-multiply filter blur-[1px]">
           ANALYZE
         </div>
-        <div className="absolute top-[30%] right-[-10%] text-[16vw] font-black text-slate-900/[0.03] leading-none tracking-tighter mix-blend-multiply filter blur-[1px]">
+        <div className="absolute top-[30%] right-[-10%] text-[16vw] font-black text-foreground/[0.03] leading-none tracking-tighter mix-blend-multiply filter blur-[1px]">
           DETECT
         </div>
         <div className="absolute top-[55%] left-[5%] text-[15vw] font-black text-accent/[0.03] leading-none tracking-tighter mix-blend-multiply filter blur-[1px]">
           TRACK
         </div>
-        <div className="absolute bottom-[5%] right-[0%] text-[18vw] font-black text-slate-900/[0.03] leading-none tracking-tighter mix-blend-multiply filter blur-[1px]">
+        <div className="absolute bottom-[5%] right-[0%] text-[18vw] font-black text-foreground/[0.03] leading-none tracking-tighter mix-blend-multiply filter blur-[1px]">
           SAVE
         </div>
         
@@ -69,7 +69,7 @@ export function DashboardHero() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="text-lg md:text-xl text-slate-500 font-medium leading-relaxed max-w-[500px] mb-10"
+            className="text-lg md:text-xl text-muted-foreground font-medium leading-relaxed max-w-[500px] mb-10"
           >
             Automatically detect recurring payments, identify hidden leaks, and stop wasting money before your next billing cycle.
           </motion.p>
@@ -106,40 +106,40 @@ export function DashboardHero() {
               scale: { duration: 1, ease: "easeOut" },
               y: { duration: 6, repeat: Infinity, ease: "easeInOut" }
             }}
-            className="relative w-[380px] h-[520px] bg-white rounded-xl shadow-2xl border border-slate-100 p-8 transform-style-3d overflow-hidden"
+            className="relative w-[380px] h-[520px] bg-card rounded-xl shadow-2xl border border-border/60 p-8 transform-style-3d overflow-hidden"
             style={{ 
               boxShadow: "0 25px 50px -12px rgba(0,0,0,0.15), 0 -10px 30px rgba(0,0,0,0.02), 40px 0px 80px -20px rgba(37,99,235,0.15)"
             }}
           >
             {/* Header */}
-            <div className="flex items-center gap-3 border-b border-slate-100 pb-6 mb-6">
-              <div className="h-10 w-10 bg-slate-100 rounded-lg flex items-center justify-center">
-                <Receipt className="h-5 w-5 text-slate-400" />
+            <div className="flex items-center gap-3 border-b border-border/60 pb-6 mb-6">
+              <div className="h-10 w-10 bg-secondary rounded-lg flex items-center justify-center">
+                <Receipt className="h-5 w-5 text-muted-foreground" />
               </div>
               <div>
-                <h3 className="font-bold text-slate-800 tracking-tight">BANK STATEMENT</h3>
-                <p className="text-xs text-slate-400 font-medium">MAY 1 - MAY 31, 2024</p>
+                <h3 className="font-bold text-foreground tracking-tight">BANK STATEMENT</h3>
+                <p className="text-xs text-muted-foreground font-medium">MAY 1 - MAY 31, 2024</p>
               </div>
             </div>
 
             {/* Content Mockup */}
             <div className="space-y-4">
               {[
-                { name: "Netflix.com", amount: "$15.49", icon: <div className="w-6 h-6 rounded bg-red-100 flex items-center justify-center text-red-600 font-bold text-[10px]">N</div> },
-                { name: "Spotify Premium", amount: "$9.99", icon: <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-[10px]">S</div> },
-                { name: "Adobe Creative Cloud", amount: "$52.99", icon: <div className="w-6 h-6 rounded bg-red-50 flex items-center justify-center text-red-600 font-bold text-[10px]">A</div> },
-                { name: "Microsoft 365", amount: "$6.99", icon: <div className="w-6 h-6 rounded bg-blue-50 flex items-center justify-center text-blue-600 font-bold text-[10px]">M</div> },
-                { name: "Amazon Prime", amount: "$14.99", icon: <div className="w-6 h-6 rounded bg-sky-50 flex items-center justify-center text-sky-600 font-bold text-[10px]">a</div> },
+                { name: "Netflix.com", amount: "$15.49", icon: <div className="w-6 h-6 rounded bg-red-100 flex items-center justify-center text-red-600 font-bold text-[10px] dark:bg-red-900 dark:text-red-300">N</div> },
+                { name: "Spotify Premium", amount: "$9.99", icon: <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-[10px] dark:bg-green-900 dark:text-green-300">S</div> },
+                { name: "Adobe Creative Cloud", amount: "$52.99", icon: <div className="w-6 h-6 rounded bg-red-50 flex items-center justify-center text-red-600 font-bold text-[10px] dark:bg-red-900/50 dark:text-red-300">A</div> },
+                { name: "Microsoft 365", amount: "$6.99", icon: <div className="w-6 h-6 rounded bg-blue-50 flex items-center justify-center text-blue-600 font-bold text-[10px] dark:bg-blue-900/50 dark:text-blue-300">M</div> },
+                { name: "Amazon Prime", amount: "$14.99", icon: <div className="w-6 h-6 rounded bg-sky-50 flex items-center justify-center text-sky-600 font-bold text-[10px] dark:bg-sky-900/50 dark:text-sky-300">a</div> },
               ].map((item, i) => (
-                <div key={i} className="flex items-center justify-between py-1 border-b border-slate-50 pb-3">
+                <div key={i} className="flex items-center justify-between py-1 border-b border-border/30 pb-3">
                   <div className="flex items-center gap-3">
                     {item.icon}
                     <div>
-                      <p className="text-sm font-semibold text-slate-700">{item.name}</p>
-                      <p className="text-[10px] text-slate-400">May {10 + i}, 2024</p>
+                      <p className="text-sm font-semibold text-foreground">{item.name}</p>
+                      <p className="text-[10px] text-muted-foreground">May {10 + i}, 2024</p>
                     </div>
                   </div>
-                  <span className="font-mono text-sm font-medium text-slate-600">{item.amount}</span>
+                  <span className="font-mono text-sm font-medium text-muted-foreground">{item.amount}</span>
                 </div>
               ))}
             </div>
@@ -158,7 +158,7 @@ export function DashboardHero() {
           <motion.div 
             animate={{ y: [-15, 15, -15], rotate: [-2, 2, -2] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-            className="absolute top-10 left-[10%] w-16 h-16 bg-white rounded-2xl shadow-xl flex items-center justify-center border border-slate-100 z-20"
+            className="absolute top-10 left-[10%] w-16 h-16 bg-card rounded-2xl shadow-xl flex items-center justify-center border border-border/60 z-20"
           >
              <div className="w-10 h-10 rounded bg-red-600 flex items-center justify-center text-white font-black text-2xl">N</div>
           </motion.div>
@@ -166,7 +166,7 @@ export function DashboardHero() {
           <motion.div 
             animate={{ y: [15, -15, 15], rotate: [2, -2, 2] }}
             transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute top-[40%] -left-[5%] w-14 h-14 bg-white rounded-2xl shadow-xl flex items-center justify-center border border-slate-100 z-20"
+            className="absolute top-[40%] -left-[5%] w-14 h-14 bg-card rounded-2xl shadow-xl flex items-center justify-center border border-border/60 z-20"
           >
              <div className="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white font-black text-xl">S</div>
           </motion.div>
@@ -174,7 +174,7 @@ export function DashboardHero() {
           <motion.div 
             animate={{ y: [-10, 10, -10], rotate: [-5, 5, -5] }}
             transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
-            className="absolute bottom-20 left-[5%] w-20 h-20 bg-white rounded-3xl shadow-xl flex items-center justify-center border border-slate-100 z-20"
+            className="absolute bottom-20 left-[5%] w-20 h-20 bg-card rounded-3xl shadow-xl flex items-center justify-center border border-border/60 z-20"
           >
              <div className="text-sky-500 font-bold text-lg flex items-center gap-1">
                <span className="text-xl">a</span> prime
@@ -184,7 +184,7 @@ export function DashboardHero() {
           <motion.div 
             animate={{ y: [20, -20, 20], rotate: [5, -5, 5] }}
             transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-            className="absolute top-[15%] right-[5%] w-16 h-16 bg-white rounded-2xl shadow-xl flex items-center justify-center border border-slate-100 z-20"
+            className="absolute top-[15%] right-[5%] w-16 h-16 bg-card rounded-2xl shadow-xl flex items-center justify-center border border-border/60 z-20"
           >
              <div className="w-10 h-10 bg-red-600 flex items-center justify-center text-white font-bold text-2xl rounded-sm">A</div>
           </motion.div>
@@ -192,7 +192,7 @@ export function DashboardHero() {
           <motion.div 
             animate={{ y: [-20, 20, -20], rotate: [-2, 2, -2] }}
             transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
-            className="absolute top-[45%] right-[-10%] w-14 h-14 bg-white rounded-2xl shadow-xl flex items-center justify-center border border-slate-100 z-20"
+            className="absolute top-[45%] right-[-10%] w-14 h-14 bg-card rounded-2xl shadow-xl flex items-center justify-center border border-border/60 z-20"
           >
              <div className="w-8 h-8 bg-red-500 flex items-center justify-center text-white rounded-md">
                <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5"><path d="M21.582 6.186a2.6 2.6 0 0 0-1.828-1.841C18.141 3.9 12 3.9 12 3.9s-6.141 0-7.754.445A2.6 2.6 0 0 0 2.418 6.186C2 7.82 2 12 2 12s0 4.18.418 5.814a2.6 2.6 0 0 0 1.828 1.841c1.613.445 7.754.445 7.754.445s6.141 0 7.754-.445a2.6 2.6 0 0 0 1.828-1.841c.418-1.634.418-5.814.418-5.814s0-4.18-.418-5.814ZM9.957 15.228V8.772l5.65 3.228-5.65 3.228Z"/></svg>
@@ -202,9 +202,9 @@ export function DashboardHero() {
           <motion.div 
             animate={{ y: [10, -10, 10], rotate: [5, -5, 5] }}
             transition={{ duration: 6.5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
-            className="absolute bottom-10 right-[15%] w-16 h-16 bg-white rounded-2xl shadow-xl flex items-center justify-center border border-slate-100 z-20"
+            className="absolute bottom-10 right-[15%] w-16 h-16 bg-card rounded-2xl shadow-xl flex items-center justify-center border border-border/60 z-20"
           >
-             <div className="w-10 h-10 bg-slate-900 rounded-full flex items-center justify-center text-white">
+             <div className="w-10 h-10 bg-slate-900 dark:bg-slate-100 rounded-full flex items-center justify-center text-white dark:text-slate-900">
                <svg viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6"><path d="M12 2C6.477 2 2 6.477 2 12c0 5.522 4.477 10 10 10s10-4.478 10-10c0-5.523-4.477-10-10-10zm4.238 14.453c-.195.32-.605.426-.921.23-2.527-1.543-5.707-1.89-9.45-.96-.367.09-.738-.133-.828-.5-.09-.367.133-.738.5-.828 4.093-1.02 7.617-.617 10.469 1.125.316.195.422.605.23.933zm1.336-3.136c-.246.4-1.023.515-1.41.273-2.883-1.77-7.293-2.285-10.457-1.25-.453.148-.934-.098-1.082-.555-.148-.457.098-.937.555-1.086 3.652-1.19 8.523-.625 11.836 1.414.398.242.82.723.558 1.204zm.129-3.324C14.28 8.043 8.281 7.844 4.82 8.89c-.535.16-1.101-.14-1.261-.675-.16-.535.14-1.101.676-1.261 4.02-1.215 10.652-.985 14.718 1.425.48.286.637.903.351 1.383-.285.48-.902.637-1.382.351h-.219z"/></svg>
              </div>
           </motion.div>
