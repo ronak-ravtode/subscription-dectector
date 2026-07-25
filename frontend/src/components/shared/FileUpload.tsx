@@ -1,5 +1,5 @@
 import { useCallback, useState, useEffect } from "react";
-import { useDropzone } from "react-dropzone";
+import { useDropzone, FileRejection } from "react-dropzone";
 import { Progress } from "@/components/ui/progress";
 import { 
   CloudUpload, 
@@ -14,10 +14,12 @@ import {
   Sparkles,
   Search,
   Store,
-  CreditCard
+  CreditCard,
+  LucideIcon
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
+import { AxiosError } from "axios";
 
 interface FileUploadProps {
   onUpload: (file: File) => void;
@@ -25,7 +27,7 @@ interface FileUploadProps {
   progress?: number;
   isSuccess?: boolean;
   isError?: boolean;
-  error?: any;
+  error?: AxiosError<{ detail?: string }> | Error | null;
   reset?: () => void;
 }
 
@@ -40,6 +42,7 @@ export function FileUpload({
 }: FileUploadProps) {
   const [file, setFile] = useState<File | null>(null);
   const [aiStage, setAiStage] = useState(0);
+  const [localError, setLocalError] = useState<string | null>(null);
 
   // Cycle through simulated AI stages when processing
   useEffect(() => {
@@ -55,7 +58,12 @@ export function FileUpload({
   }, [isLoading, progress]);
 
   const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
+    (acceptedFiles: File[], fileRejections: FileRejection[]) => {
+      setLocalError(null);
+      if (fileRejections.length > 0) {
+        setLocalError(fileRejections[0].errors[0].message);
+        return;
+      }
       const selected = acceptedFiles[0];
       if (selected) {
         setFile(selected);
@@ -77,15 +85,22 @@ export function FileUpload({
   const handleRetry = (e: React.MouseEvent) => {
     e.stopPropagation();
     setFile(null);
+    setLocalError(null);
     if (reset) reset();
   };
 
   // State calculations
-  const showIdle = !file && !isError && !isSuccess;
-  const showUploading = file && isLoading && progress !== undefined && progress < 100;
-  const showProcessing = file && isLoading && progress === 100;
+  const showIdle = !file && !isError && !isSuccess && !localError;
+  const currentProgress = progress ?? 0;
+  const showUploading = file && isLoading && currentProgress < 100;
+  const showProcessing = file && isLoading && currentProgress === 100;
   const showCompleted = isSuccess;
-  const showError = isError;
+  const showError = isError || localError !== null;
+
+  const errorMessage = localError || 
+    ((error as AxiosError<{ detail?: string }>)?.response?.data?.detail) || 
+    (error as Error)?.message || 
+    "Something went wrong. Please try again.";
 
   return (
     <motion.div 
@@ -208,9 +223,9 @@ export function FileUpload({
               <div className="w-full space-y-3">
                 <div className="flex justify-between text-[14px] font-bold text-foreground">
                   <span>Uploading...</span>
-                  <span className="text-accent">{progress}%</span>
+                  <span className="text-accent">{currentProgress}%</span>
                 </div>
-                <Progress value={progress} className="h-3 bg-secondary [&>div]:bg-accent" />
+                <Progress value={currentProgress} className="h-3 bg-secondary [&>div]:bg-accent" />
               </div>
             </motion.div>
           )}
@@ -287,7 +302,7 @@ export function FileUpload({
                 Upload Failed
               </h3>
               <p className="text-destructive font-medium text-[15px] mb-8 bg-destructive/10 px-4 py-2 rounded-lg border border-destructive/30 w-full text-center">
-                {error?.response?.data?.detail || "Something went wrong. Please try again."}
+                {errorMessage}
               </p>
 
               <button 
@@ -305,7 +320,7 @@ export function FileUpload({
   );
 }
 
-function ProcessingStep({ active, completed, icon: Icon, text }: { active: boolean, completed: boolean, icon: any, text: string }) {
+function ProcessingStep({ active, completed, icon: Icon, text }: { active: boolean, completed: boolean, icon: LucideIcon, text: string }) {
   return (
     <motion.div 
       initial={{ opacity: 0.4 }}

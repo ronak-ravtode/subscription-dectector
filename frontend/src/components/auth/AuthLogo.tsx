@@ -21,7 +21,7 @@ export function AuthLogo({ title, subtitle }: AuthLogoProps) {
       <h1 className="text-[32px] md:text-[40px] font-semibold text-foreground tracking-tight mb-2">
         {title}
       </h1>
-      <p className="text-[16px] text-muted-foreground font-medium text-center max-w-[280px]">
+      <p className="text-[16px] text-secondary-foreground font-medium text-center max-w-[280px]">
         {subtitle}
       </p>
     </div>

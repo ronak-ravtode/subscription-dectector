@@ -32,7 +32,9 @@ export function normalizeMerchantName(rawName: string): string {
   
   // 1. Check exact matches in the dictionary
   for (const [key, value] of Object.entries(normalizationMap)) {
-    if (lowerClean.includes(key)) {
+    const escapedKey = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(`\\b${escapedKey}\\b`, 'i');
+    if (regex.test(clean)) {
       return value;
     }
   }
@@ -50,8 +52,17 @@ export function normalizeMerchantName(rawName: string): string {
 
   clean = clean.trim();
 
-  // 3. Title case the fallback string
-  return clean.split(' ').map(word => 
-    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
-  ).join(' ') || "Unknown Merchant";
+  // 3. Title case the fallback string but preserve specific compound brands
+  const compoundBrands: Record<string, string> = {
+    "youtube": "YouTube",
+    "github": "GitHub",
+    "chatgpt": "ChatGPT",
+    "openai": "OpenAI",
+    "linkedin": "LinkedIn"
+  };
+
+  return clean.split(' ').map(word => {
+    const lowerWord = word.toLowerCase();
+    return compoundBrands[lowerWord] || (word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+  }).join(' ') || "Unknown Merchant";
 }

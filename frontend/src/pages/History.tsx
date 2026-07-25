@@ -7,13 +7,13 @@ import { StatusBadge } from "@/components/shared/StatusBadge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatCurrency, formatDate } from "@/lib/utils";
-import { ChevronLeft, ChevronRight, FileText } from "lucide-react";
+import { ChevronLeft, ChevronRight, FileText, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export default function History() {
   const [page, setPage] = useState(1);
-  const { data, isLoading } = useHistory(page, 10);
+  const { data, isLoading, isError, refetch } = useHistory(page, 10);
   const navigate = useNavigate();
 
   // Generate pagination array like [1, 2, 3] or [1, '...', 4, 5] if needed
@@ -33,6 +33,7 @@ export default function History() {
           <button
             disabled={page <= 1}
             onClick={() => setPage(page - 1)}
+            aria-label="Previous page"
             className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-secondary disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ChevronLeft className="h-4 w-4" />
@@ -58,6 +59,7 @@ export default function History() {
           <button
             disabled={page >= pages}
             onClick={() => setPage(page + 1)}
+            aria-label="Next page"
             className="flex h-9 w-9 items-center justify-center rounded-lg border border-border text-muted-foreground transition-colors hover:bg-secondary disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <ChevronRight className="h-4 w-4" />
@@ -95,6 +97,17 @@ export default function History() {
             <Skeleton className="h-12 w-full rounded-xl bg-secondary" />
             <Skeleton className="h-12 w-full rounded-xl bg-secondary" />
             <Skeleton className="h-12 w-full rounded-xl bg-secondary" />
+          </div>
+        ) : isError ? (
+          <div className="flex flex-col items-center justify-center py-24 text-center px-4">
+            <div className="bg-destructive/10 h-24 w-24 rounded-full flex items-center justify-center mb-6 shadow-sm border border-destructive/20">
+              <AlertCircle className="h-10 w-10 text-destructive" />
+            </div>
+            <h3 className="text-[22px] font-bold text-foreground mb-2">Failed to load history</h3>
+            <p className="text-muted-foreground max-w-md text-[16px] mb-6">There was a problem loading your analysis history. Please try again.</p>
+            <button onClick={() => refetch()} className="bg-card border border-border px-6 py-2 rounded-xl text-foreground font-semibold hover:bg-secondary transition-colors">
+              Try Again
+            </button>
           </div>
         ) : !data?.analyses || data.analyses.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-24 text-center px-4">

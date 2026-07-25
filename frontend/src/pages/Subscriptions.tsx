@@ -103,6 +103,13 @@ export default function Subscriptions() {
     }
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent, field: keyof Subscription) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      handleSort(field);
+    }
+  };
+
   const SortIcon = ({ field }: { field: keyof Subscription }) => {
     if (sortField !== field) return null;
     return sortDir === "asc" ? <ChevronUp className="w-4 h-4 inline ml-1" /> : <ChevronDown className="w-4 h-4 inline ml-1" />;
@@ -218,22 +225,31 @@ export default function Subscriptions() {
               <TableHeader className="bg-secondary/50 sticky top-0 backdrop-blur-sm">
                 <TableRow className="border-border hover:bg-transparent">
                   <TableHead
+                    role="button"
+                    tabIndex={0}
                     className="cursor-pointer hover:text-foreground text-[13px] font-bold text-muted-foreground uppercase tracking-wider py-5 pl-8 transition-colors whitespace-nowrap"
                     onClick={() => handleSort("merchant")}
+                    onKeyDown={(e) => handleKeyDown(e, "merchant")}
                   >
                     Merchant <SortIcon field="merchant" />
                   </TableHead>
                   <TableHead
+                    role="button"
+                    tabIndex={0}
                     className="cursor-pointer hover:text-foreground text-[13px] font-bold text-muted-foreground uppercase tracking-wider py-5 transition-colors whitespace-nowrap"
                     onClick={() => handleSort("amount")}
+                    onKeyDown={(e) => handleKeyDown(e, "amount")}
                   >
                     Amount <SortIcon field="amount" />
                   </TableHead>
                   <TableHead className="text-[13px] font-bold text-muted-foreground uppercase tracking-wider py-5 whitespace-nowrap">Frequency</TableHead>
                   <TableHead className="text-[13px] font-bold text-muted-foreground uppercase tracking-wider py-5 whitespace-nowrap">Category</TableHead>
                   <TableHead
+                    role="button"
+                    tabIndex={0}
                     className="cursor-pointer hover:text-foreground text-[13px] font-bold text-muted-foreground uppercase tracking-wider py-5 transition-colors whitespace-nowrap"
                     onClick={() => handleSort("leak_score")}
+                    onKeyDown={(e) => handleKeyDown(e, "leak_score")}
                   >
                     Score <SortIcon field="leak_score" />
                   </TableHead>

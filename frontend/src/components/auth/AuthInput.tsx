@@ -26,8 +26,8 @@ export const AuthInput = forwardRef<HTMLInputElement, AuthInputProps>(
         
         {/* Floating Label */}
         <label
-          className={`absolute top-1 text-[11px] font-medium text-muted-foreground/70 transition-all duration-200 pointer-events-none 
-          peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-[16px] peer-placeholder-shown:text-muted-foreground 
+          className={`absolute top-1 text-[11px] font-medium text-secondary-foreground/70 transition-all duration-200 pointer-events-none 
+          peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-[16px] peer-placeholder-shown:text-secondary-foreground 
           peer-focus:top-1 peer-focus:text-[11px] peer-focus:text-primary
           ${icon ? "left-11" : "left-4"}`}
         >

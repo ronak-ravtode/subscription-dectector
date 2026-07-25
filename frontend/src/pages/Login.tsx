@@ -68,7 +68,7 @@ export default function Login() {
             {loginMutation.isPending ? "Signing in..." : "Sign In"}
           </AuthButton>
 
-          <p className="text-center text-[14px] text-muted-foreground mt-6">
+          <p className="text-center text-[14px] text-secondary-foreground mt-6">
             Don't have an account?{" "}
             <Link to="/register" className="font-semibold text-primary hover:text-foreground transition-colors">
               Create one

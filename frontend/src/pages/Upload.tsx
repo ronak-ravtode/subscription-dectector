@@ -9,7 +9,6 @@ import {
   CreditCard, 
   Brain, 
   BarChart,
-  Search as SearchIcon,
   PieChart,
   BrainCircuit,
   Lightbulb,
@@ -17,6 +16,46 @@ import {
   ArrowRight
 } from "lucide-react";
 import { motion } from "framer-motion";
+
+const pipelineSteps = [
+  { icon: FileCheck, title: "PDF Upload", color: "text-purple-600 dark:text-purple-400", bg: "bg-purple-100 dark:bg-purple-900/20" },
+  { icon: Search, title: "Transaction Extraction", color: "text-accent", bg: "bg-accent/10" },
+  { icon: Store, title: "Merchant Detection", color: "text-success", bg: "bg-success/10" },
+  { icon: CreditCard, title: "Subscription Detection", color: "text-accent", bg: "bg-accent/10" },
+  { icon: Brain, title: "AI Risk Analysis", color: "text-accent", bg: "bg-accent/10" },
+  { icon: BarChart, title: "Personalized Recommendations", color: "text-purple-600 dark:text-purple-400", bg: "bg-purple-100 dark:bg-purple-900/20" },
+];
+
+const features = [
+  {
+    icon: Search,
+    color: "text-purple-600 dark:text-purple-400",
+    bg: "bg-purple-100 dark:bg-purple-900/20",
+    title: "Hidden Subscription Detection",
+    description: "Find forgotten recurring subscriptions."
+  },
+  {
+    icon: PieChart,
+    color: "text-success",
+    bg: "bg-success/10",
+    title: "Monthly & Annual Leak Analysis",
+    description: "Calculate your recurring expenses."
+  },
+  {
+    icon: BrainCircuit,
+    color: "text-accent",
+    bg: "bg-accent/10",
+    title: "AI Spending Intelligence",
+    description: "Understand recurring spending behavior."
+  },
+  {
+    icon: Lightbulb,
+    color: "text-warning",
+    bg: "bg-warning/10",
+    title: "Smart Recommendations",
+    description: "Receive actionable savings suggestions."
+  }
+];
 
 export default function Upload() {
   const [progress, setProgress] = useState(0);
@@ -40,45 +79,6 @@ export default function Upload() {
     });
   };
 
-  const pipelineSteps = [
-    { icon: FileCheck, title: "PDF Upload", color: "text-purple-600 dark:text-purple-400", bg: "bg-purple-100 dark:bg-purple-900/20" },
-    { icon: Search, title: "Transaction Extraction", color: "text-accent", bg: "bg-accent/10" },
-    { icon: Store, title: "Merchant Detection", color: "text-success", bg: "bg-success/10" },
-    { icon: CreditCard, title: "Subscription Detection", color: "text-accent", bg: "bg-accent/10" },
-    { icon: Brain, title: "AI Risk Analysis", color: "text-accent", bg: "bg-accent/10" },
-    { icon: BarChart, title: "Personalized Recommendations", color: "text-purple-600 dark:text-purple-400", bg: "bg-purple-100 dark:bg-purple-900/20" },
-  ];
-
-  const features = [
-    {
-      icon: SearchIcon,
-      color: "text-purple-600 dark:text-purple-400",
-      bg: "bg-purple-100 dark:bg-purple-900/20",
-      title: "Hidden Subscription Detection",
-      description: "Find forgotten recurring subscriptions."
-    },
-    {
-      icon: PieChart,
-      color: "text-success",
-      bg: "bg-success/10",
-      title: "Monthly & Annual Leak Analysis",
-      description: "Calculate your recurring expenses."
-    },
-    {
-      icon: BrainCircuit,
-      color: "text-accent",
-      bg: "bg-accent/10",
-      title: "AI Spending Intelligence",
-      description: "Understand recurring spending behavior."
-    },
-    {
-      icon: Lightbulb,
-      color: "text-warning",
-      bg: "bg-warning/10",
-      title: "Smart Recommendations",
-      description: "Receive actionable savings suggestions."
-    }
-  ];
 
   return (
     <PageWrapper>
@@ -134,7 +134,7 @@ export default function Upload() {
               return (
                 <div key={index} className="flex items-center">
                   <div className="flex flex-col items-center text-center w-[160px] group">
-                    <div className={`w-16 h-16 rounded-2xl ${step.bg} flex items-center justify-center mb-4 transition-transform group-hover:-translate-y-1 group-hover:shadow-md border border-border bg-card`}>
+                    <div className={`w-16 h-16 rounded-2xl ${step.bg} flex items-center justify-center mb-4 transition-transform group-hover:-translate-y-1 group-hover:shadow-md border border-border`}>
                       <Icon className={`w-7 h-7 ${step.color}`} />
                     </div>
                     <div className="text-[14px] font-bold text-accent mb-1">{index + 1}</div>
