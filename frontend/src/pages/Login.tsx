@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLogin } from "@/hooks/useAuth";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Shield } from "lucide-react";
+import { Mail, Lock } from "lucide-react";
+
+import { AuthLayout } from "@/components/auth/AuthLayout";
+import { AuthCard } from "@/components/auth/AuthCard";
+import { AuthLogo } from "@/components/auth/AuthLogo";
+import { AuthInput } from "@/components/auth/AuthInput";
+import { AuthButton } from "@/components/auth/AuthButton";
+import { SecurityBadge } from "@/components/auth/SecurityBadge";
+import { AuthFooter } from "@/components/auth/AuthFooter";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -18,69 +22,63 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1 text-center">
-          <div className="flex justify-center mb-2">
-            <Shield className="h-12 w-12 text-primary" />
-          </div>
-          <CardTitle className="text-2xl font-bold">SubGuard</CardTitle>
-          <CardDescription>
-            Sign in to detect subscription leaks
-          </CardDescription>
-        </CardHeader>
-        <form onSubmit={handleSubmit}>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <div className="flex items-center justify-between">
-                <Label htmlFor="password">Password</Label>
-                <Link to="/forgot-password" className="text-xs text-primary hover:underline">
+    <AuthLayout>
+      <AuthCard>
+        <AuthLogo title="SubGuard" subtitle="Sign in to detect subscription leaks" />
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-4">
+            <AuthInput
+              id="email"
+              type="email"
+              label="Email"
+              icon={<Mail className="w-5 h-5" />}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              disabled={loginMutation.isPending}
+            />
+
+            <div className="space-y-1.5">
+              <div className="flex justify-end">
+                <Link to="/forgot-password" className="text-[13px] font-medium text-[#2563EB] hover:text-[#0F172A] transition-colors">
                   Forgot password?
                 </Link>
               </div>
-              <Input
+              <AuthInput
                 id="password"
                 type="password"
-                placeholder="Enter your password"
+                label="Password"
+                icon={<Lock className="w-5 h-5" />}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
+                disabled={loginMutation.isPending}
               />
             </div>
+
             {loginMutation.isError && (
-              <p className="text-sm text-destructive">
-                {(loginMutation.error as any)?.response?.data?.detail || "Login failed"}
+              <p className="text-[14px] font-medium text-[#E11D48] bg-[#FFE4E6] p-3 rounded-lg border border-[#FDA4AF]">
+                {(loginMutation.error as any)?.response?.data?.detail || "Login failed. Please check your credentials."}
               </p>
             )}
-          </CardContent>
-          <CardFooter className="flex flex-col space-y-4">
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={loginMutation.isPending}
-            >
-              {loginMutation.isPending ? "Signing in..." : "Sign In"}
-            </Button>
-            <p className="text-sm text-muted-foreground text-center">
-              Don&apos;t have an account?{" "}
-              <Link to="/register" className="text-primary hover:underline">
-                Sign up
-              </Link>
-            </p>
-          </CardFooter>
+          </div>
+
+          <AuthButton type="submit" isLoading={loginMutation.isPending}>
+            {loginMutation.isPending ? "Signing in..." : "Sign In"}
+          </AuthButton>
+
+          <p className="text-center text-[14px] text-[#64748B] mt-6">
+            Don't have an account?{" "}
+            <Link to="/register" className="font-semibold text-[#2563EB] hover:text-[#0F172A] transition-colors">
+              Sign Up
+            </Link>
+          </p>
         </form>
-      </Card>
-    </div>
+
+        <SecurityBadge />
+        <AuthFooter />
+      </AuthCard>
+    </AuthLayout>
   );
 }

@@ -31,27 +31,27 @@ export function CategoryBreakdownTable({ subscriptions }: CategoryBreakdownTable
   if (categoryData.length === 0) return null;
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="text-lg">Category Breakdown</CardTitle>
+    <Card className="rounded-2xl border-slate-200/60 shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden flex flex-col">
+      <CardHeader className="pb-2 pt-6 px-6">
+        <CardTitle className="text-xl font-semibold text-primary">Category Breakdown</CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-0 pt-2 flex-1">
         <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Category</TableHead>
-              <TableHead className="text-right">Monthly</TableHead>
-              <TableHead className="text-right">Annual</TableHead>
+          <TableHeader className="bg-slate-50/50">
+            <TableRow className="border-slate-100 hover:bg-transparent">
+              <TableHead className="px-6 py-3 font-medium text-slate-500 text-xs uppercase tracking-wider">Category</TableHead>
+              <TableHead className="px-6 py-3 font-medium text-slate-500 text-xs uppercase tracking-wider text-right">Monthly</TableHead>
+              <TableHead className="px-6 py-3 font-medium text-slate-500 text-xs uppercase tracking-wider text-right">Annual</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {categoryData.map((cat) => (
-              <TableRow key={cat.category}>
-                <TableCell className="capitalize">{cat.category}</TableCell>
-                <TableCell className="text-right font-mono">
+              <TableRow key={cat.category} className="border-slate-100 hover:bg-slate-50/80 transition-colors">
+                <TableCell className="px-6 py-4 capitalize text-slate-700 font-medium">{cat.category}</TableCell>
+                <TableCell className="px-6 py-4 text-right font-semibold text-primary">
                   ${cat.monthly.toFixed(2)}
                 </TableCell>
-                <TableCell className="text-right font-mono text-muted-foreground">
+                <TableCell className="px-6 py-4 text-right text-slate-500">
                   ${cat.annual.toFixed(2)}
                 </TableCell>
               </TableRow>

@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useRegister } from "@/hooks/useAuth";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Shield } from "lucide-react";
+import { Mail, Lock, ShieldCheck } from "lucide-react";
+
+import { AuthLayout } from "@/components/auth/AuthLayout";
+import { AuthCard } from "@/components/auth/AuthCard";
+import { AuthLogo } from "@/components/auth/AuthLogo";
+import { AuthInput } from "@/components/auth/AuthInput";
+import { AuthButton } from "@/components/auth/AuthButton";
+import { SecurityBadge } from "@/components/auth/SecurityBadge";
+import { AuthFooter } from "@/components/auth/AuthFooter";
 
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -32,75 +36,67 @@ export default function Register() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="space-y-1 text-center">
-          <div className="flex justify-center mb-2">
-            <Shield className="h-12 w-12 text-primary" />
-          </div>
-          <CardTitle className="text-2xl font-bold">Create Account</CardTitle>
-          <CardDescription>
-            Start detecting subscription leaks today
-          </CardDescription>
-        </CardHeader>
-        <form onSubmit={handleSubmit}>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                placeholder="you@example.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="At least 8 characters"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
-              <Input
-                id="confirmPassword"
-                type="password"
-                placeholder="Confirm your password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-              />
-            </div>
+    <AuthLayout>
+      <AuthCard>
+        <AuthLogo title="Create Account" subtitle="Start detecting subscription leaks today" />
+
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-4">
+            <AuthInput
+              id="email"
+              type="email"
+              label="Email"
+              icon={<Mail className="w-5 h-5" />}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              disabled={registerMutation.isPending}
+            />
+
+            <AuthInput
+              id="password"
+              type="password"
+              label="Password (min 8 characters)"
+              icon={<Lock className="w-5 h-5" />}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              disabled={registerMutation.isPending}
+            />
+
+            <AuthInput
+              id="confirmPassword"
+              type="password"
+              label="Confirm Password"
+              icon={<ShieldCheck className="w-5 h-5" />}
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              disabled={registerMutation.isPending}
+            />
+
             {(error || registerMutation.isError) && (
-              <p className="text-sm text-destructive">
-                {error || (registerMutation.error as any)?.response?.data?.detail || "Registration failed"}
+              <p className="text-[14px] font-medium text-[#E11D48] bg-[#FFE4E6] p-3 rounded-lg border border-[#FDA4AF]">
+                {error || (registerMutation.error as any)?.response?.data?.detail || "Registration failed. Please try again."}
               </p>
             )}
-          </CardContent>
-          <CardFooter className="flex flex-col space-y-4">
-            <Button
-              type="submit"
-              className="w-full"
-              disabled={registerMutation.isPending}
-            >
-              {registerMutation.isPending ? "Creating account..." : "Create Account"}
-            </Button>
-            <p className="text-sm text-muted-foreground text-center">
-              Already have an account?{" "}
-              <Link to="/login" className="text-primary hover:underline">
-                Sign in
-              </Link>
-            </p>
-          </CardFooter>
+          </div>
+
+          <AuthButton type="submit" isLoading={registerMutation.isPending}>
+            {registerMutation.isPending ? "Creating account..." : "Create Account"}
+          </AuthButton>
+
+          <p className="text-center text-[14px] text-[#64748B] mt-6">
+            Already have an account?{" "}
+            <Link to="/login" className="font-semibold text-[#2563EB] hover:text-[#0F172A] transition-colors">
+              Sign In
+            </Link>
+          </p>
         </form>
-      </Card>
-    </div>
+
+        <SecurityBadge />
+        <AuthFooter />
+      </AuthCard>
+    </AuthLayout>
   );
 }
