@@ -1,0 +1,9 @@
+{
+  "bank_name": "ICICI Bank",
+  "bank_code": "icici",
+  "date_format": "DD/MM/YYYY",
+  "columns": ["date", "description", "debit", "credit", "balance"],
+  "bank_codes_to_remove": ["ICIC", "ICICI"],
+  "UPI_PREFIXES": ["UPI", "DR", "CR", "MMT", "ACH"],
+  "multi_line": true
+}

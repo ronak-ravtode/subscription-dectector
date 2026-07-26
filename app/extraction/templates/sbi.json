@@ -1,0 +1,12 @@
+{
+  "bank_name": "State Bank of India",
+  "bank_code": "sbi",
+  "date_format": "DD/MM/YYYY",
+  "columns": ["txn_date", "value_date", "description", "debit", "credit", "balance"],
+  "description_separator": "/",
+  "amount_prefixes": ["Sent", "Refun", "Pay", "Manda", "UPIInt"],
+  "bank_codes_to_remove": ["YESB", "UTIB", "HDFC", "SBIN", "ICIC", "KKBK", "BARB", "NSPB"],
+  "UPI_PREFIXES": ["UPI", "CR", "DR", "REF"],
+  "skip_keywords": ["account", "statement", "balance", "summary", "total"],
+  "multi_line": true
+}

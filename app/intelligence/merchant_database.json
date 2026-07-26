@@ -1,0 +1,40 @@
+{
+  "merchants": {
+    "netflix": {
+      "canonical_name": "Netflix",
+      "category": "entertainment",
+      "subcategory": "streaming",
+      "aliases": ["NETFLIX.COM", "NETFLIX INDIA", "Netflix*Subs", "NFLX"]
+    },
+    "spotify": {
+      "canonical_name": "Spotify",
+      "category": "entertainment",
+      "subcategory": "music",
+      "aliases": ["SPOTIFY PREMIUM", "Spotify India", "SPOTIFY*SUBS"]
+    },
+    "adobe": {
+      "canonical_name": "Adobe",
+      "category": "software",
+      "subcategory": "creative",
+      "aliases": ["ADOBE CREATIVE CLOUD", "ADOBE CC", "ADOBE.COM"]
+    },
+    "microsoft": {
+      "canonical_name": "Microsoft",
+      "category": "software",
+      "subcategory": "productivity",
+      "aliases": ["MICROSOFT 365", "MS OFFICE", "MICROSOFT.COM"]
+    },
+    "amazon_prime": {
+      "canonical_name": "Amazon Prime",
+      "category": "entertainment",
+      "subcategory": "streaming",
+      "aliases": ["AMAZON PRIME", "PRIME VIDEO", "AMAZON*PRIME"]
+    },
+    "youtube": {
+      "canonical_name": "YouTube Premium",
+      "category": "entertainment",
+      "subcategory": "streaming",
+      "aliases": ["YOUTUBE PREMIUM", "YOUTUBE.COM", "YT PREMIUM"]
+    }
+  }
+}

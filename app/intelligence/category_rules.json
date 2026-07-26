@@ -1,0 +1,69 @@
+{
+  "categories": {
+    "entertainment": {
+      "keywords": ["netflix", "spotify", "disney", "youtube", "hulu", "hotstar", "prime video"],
+      "subcategories": {
+        "streaming": ["netflix", "disney", "youtube", "hulu", "hotstar", "prime video"],
+        "music": ["spotify", "apple music", "gaana", "wynk"],
+        "gaming": ["steam", "playstation", "xbox", "nintendo"]
+      }
+    },
+    "software": {
+      "keywords": ["adobe", "microsoft", "github", "figma", "canva", "slack", "zoom"],
+      "subcategories": {
+        "creative": ["adobe", "figma", "canva"],
+        "productivity": ["microsoft", "google workspace", "notion"],
+        "development": ["github", "gitlab", "aws", "azure"]
+      }
+    },
+    "utilities": {
+      "keywords": ["electric", "gas", "water", "internet", "broadband", "wifi"],
+      "subcategories": {
+        "electricity": ["electric", "power", "energy"],
+        "gas": ["gas", "lpg"],
+        "water": ["water", "sewage"],
+        "internet": ["internet", "broadband", "wifi", "jio", "airtel"]
+      }
+    },
+    "food": {
+      "keywords": ["swiggy", "zomato", "uber eats", "dominos", "pizza"],
+      "subcategories": {
+        "delivery": ["swiggy", "zomato", "uber eats"],
+        "dine-in": ["restaurant", "cafe"],
+        "grocery": ["bigbasket", "blinkit", "zepto"]
+      }
+    },
+    "shopping": {
+      "keywords": ["amazon", "flipkart", "myntra", "ajio", "meesho"],
+      "subcategories": {
+        "general": ["amazon", "flipkart"],
+        "fashion": ["myntra", "ajio", "meesho"],
+        "electronics": ["croma", "reliance digital"]
+      }
+    },
+    "transport": {
+      "keywords": ["uber", "ola", "rapido", "metro", "parking", "fuel"],
+      "subcategories": {
+        "ride-hailing": ["uber", "ola", "rapido"],
+        "fuel": ["fuel", "petrol", "diesel", "shell", "bp"],
+        "parking": ["parking", "toll"]
+      }
+    },
+    "health": {
+      "keywords": ["pharmacy", "hospital", "gym", "fitness", "doctor"],
+      "subcategories": {
+        "pharmacy": ["pharmacy", "medicine", "1mg", "pharmeasy"],
+        "fitness": ["gym", "fitness", "cult.fit"],
+        "medical": ["hospital", "doctor", "lab"]
+      }
+    },
+    "financial": {
+      "keywords": ["emi", "loan", "insurance", "premium", "mutual fund"],
+      "subcategories": {
+        "loan": ["emi", "loan", "housing loan"],
+        "insurance": ["insurance", "premium", "lic"],
+        "investment": ["mutual fund", "sip", "stock"]
+      }
+    }
+  }
+}
