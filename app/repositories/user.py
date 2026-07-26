@@ -30,15 +30,23 @@ def authenticate_user(db: Session, email: str, password: str) -> Optional[User]:
         return None
     return user
 
-def update_user_settings(db: Session, user_id: str, settings_data: dict) -> Optional[UserSettings]:
+def update_user_settings(db: Session, user_id: str, settings_data: dict = None, notification_email: bool = None, currency: str = None, theme: str = None) -> Optional[UserSettings]:
     settings = db.query(UserSettings).filter(UserSettings.user_id == user_id).first()
     if not settings:
         return None
-    
-    for key, value in settings_data.items():
-        if value is not None:
-            setattr(settings, key, value)
-    
+
+    if settings_data:
+        for key, value in settings_data.items():
+            if value is not None:
+                setattr(settings, key, value)
+    else:
+        if notification_email is not None:
+            settings.notification_email = notification_email
+        if currency is not None:
+            settings.currency = currency
+        if theme is not None:
+            settings.theme = theme
+
     db.commit()
     db.refresh(settings)
     return settings
