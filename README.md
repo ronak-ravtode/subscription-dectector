@@ -6,6 +6,7 @@ Detect hidden subscriptions, recurring charges, and spending leaks from your ban
 
 - **Frontend**: https://frontend-five-khaki-94.vercel.app
 - **Backend API**: https://subscription-dectector.onrender.com
+- **Presentation**: [Google Slides](https://docs.google.com/presentation/d/1dG5H6tKGdZEwvLB39PWU-lUSc845vIHD/edit?usp=sharing&ouid=108650897223386794163&rtpof=true&sd=true)
 
 ## Features
 
