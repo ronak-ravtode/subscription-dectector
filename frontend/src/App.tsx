@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AuthGuard } from "@/components/shared/AuthGuard";
+import Landing from "@/pages/Landing";
 import Login from "@/pages/Login";
 import Register from "@/pages/Register";
 import Dashboard from "@/pages/Dashboard";
@@ -13,6 +14,7 @@ import ForgotPassword from "@/pages/ForgotPassword";
 import ResetPassword from "@/pages/ResetPassword";
 import { EmailConnect } from "@/pages/EmailConnect";
 import SpendingTrends from "@/pages/SpendingTrends";
+import { useAuthStore } from "@/store/authStore";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -24,20 +26,27 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  const token = useAuthStore((s) => s.token);
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/landing" element={<Landing />} />
+          <Route path="/login" element={token ? <Navigate to="/" replace /> : <Login />} />
+          <Route path="/register" element={token ? <Navigate to="/" replace /> : <Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route
             path="/"
             element={
-              <AuthGuard>
-                <Dashboard />
-              </AuthGuard>
+              token ? (
+                <AuthGuard>
+                  <Dashboard />
+                </AuthGuard>
+              ) : (
+                <Landing />
+              )
             }
           />
           <Route
