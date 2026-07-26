@@ -1,5 +1,6 @@
 __pycache__/
 *.pyc
+*.pyo
 *.db
 *.egg-info/
 .venv/
@@ -10,6 +11,7 @@ frontend/node_modules/
 frontend/test-results/
 frontend/playwright-report/
 frontend/tsconfig.tsbuildinfo
+frontend/dist/
 .env
 .DS_Store
 .idea/
