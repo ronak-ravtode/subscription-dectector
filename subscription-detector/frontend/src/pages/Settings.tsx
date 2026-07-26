@@ -223,10 +223,25 @@ export default function Settings() {
 
             <Button
               variant="outline"
+              disabled={updateSmsSettings.isPending}
               onClick={() => {
-                api.post("/api/user/sms-test")
+                // Save phone number first if it's not yet persisted, then test
+                const savePromise = smsPhoneNumber && smsPhoneNumber !== smsSettings?.phone_number
+                  ? new Promise((resolve, reject) => {
+                      updateSmsSettings.mutate(
+                        { phone_number: smsPhoneNumber },
+                        { onSuccess: resolve, onError: reject }
+                      );
+                    })
+                  : Promise.resolve();
+
+                savePromise
+                  .then(() => api.post("/api/user/sms-test"))
                   .then(() => alert("Test SMS sent!"))
-                  .catch(() => alert("Failed to send test SMS"));
+                  .catch((err) => {
+                    const msg = err?.response?.data?.detail || "Failed to send test SMS. Make sure you've saved your phone number.";
+                    alert(msg);
+                  });
               }}
             >
               Test Forwarding
