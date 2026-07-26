@@ -203,8 +203,14 @@ export default function Settings() {
               onClick={() => updateSmsSettings.mutate({ phone_number: smsPhoneNumber })}
               disabled={updateSmsSettings.isPending}
             >
-              Save Phone Number
+              {updateSmsSettings.isPending ? "Saving..." : "Save Phone Number"}
             </Button>
+            {updateSmsSettings.isSuccess && (
+              <p className="text-sm text-green-600">Phone number saved successfully!</p>
+            )}
+            {updateSmsSettings.isError && (
+              <p className="text-sm text-red-600">Failed to save. Make sure you're logged in.</p>
+            )}
 
             {smsSettings?.sms_forwarding_enabled && (
               <div className="bg-soft-cloud p-4 text-sm space-y-2">
@@ -226,7 +232,7 @@ export default function Settings() {
               onClick={() => {
                 api.post("/api/user/sms-test")
                   .then(() => alert("Test SMS sent!"))
-                  .catch(() => alert("Failed to send test SMS"));
+                  .catch((err) => alert("Failed: " + (err.response?.data?.detail || "Unknown error")));
               }}
             >
               Test Forwarding
