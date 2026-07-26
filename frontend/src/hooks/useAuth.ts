@@ -31,7 +31,7 @@ export function useLogin() {
     },
     onSuccess: (data) => {
       login(data.access_token, data.user);
-      navigate("/");
+      navigate("/dashboard");
     },
   });
 }

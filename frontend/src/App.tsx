@@ -32,21 +32,18 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <Routes>
+          <Route path="/" element={<Landing />} />
           <Route path="/landing" element={<Landing />} />
-          <Route path="/login" element={token ? <Navigate to="/" replace /> : <Login />} />
-          <Route path="/register" element={token ? <Navigate to="/" replace /> : <Register />} />
+          <Route path="/login" element={token ? <Navigate to="/dashboard" replace /> : <Login />} />
+          <Route path="/register" element={token ? <Navigate to="/dashboard" replace /> : <Register />} />
           <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/reset-password" element={<ResetPassword />} />
           <Route
-            path="/"
+            path="/dashboard"
             element={
-              token ? (
-                <AuthGuard>
-                  <Dashboard />
-                </AuthGuard>
-              ) : (
-                <Landing />
-              )
+              <AuthGuard>
+                <Dashboard />
+              </AuthGuard>
             }
           />
           <Route

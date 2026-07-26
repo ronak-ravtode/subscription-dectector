@@ -23,7 +23,7 @@ export function Navbar() {
   };
 
   const navItems = [
-    { to: "/", icon: LayoutDashboard, label: "Dashboard" },
+    { to: "/dashboard", icon: LayoutDashboard, label: "Dashboard" },
     { to: "/upload", icon: Upload, label: "Upload" },
     { to: "/subscriptions", icon: CreditCard, label: "Subscriptions" },
     { to: "/history", icon: History, label: "History" },
@@ -32,14 +32,14 @@ export function Navbar() {
   ];
 
   const isActive = (path: string) => {
-    if (path === "/") return location.pathname === "/";
+    if (path === "/dashboard") return location.pathname === "/dashboard";
     return location.pathname.startsWith(path);
   };
 
   return (
     <header className="sticky top-0 z-50 w-full bg-canvas border-b border-hairline">
       <div className="container flex h-16 items-center">
-        <Link to="/" className="mr-8 flex items-center space-x-2 group">
+        <Link to="/dashboard" className="mr-8 flex items-center space-x-2 group">
           <Shield className="h-6 w-6 text-ink" />
           <span className="hidden font-bold text-lg sm:inline-block font-heading">
             SubGuard
