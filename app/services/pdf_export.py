@@ -39,6 +39,11 @@ def get_score_color(score: int) -> colors.Color:
     return SCORE_COLORS["red"]
 
 
+def rupee(amount):
+    """Format amount with Rs. prefix (Helvetica doesn't support ₹ symbol)."""
+    return f"Rs. {amount:,.0f}"
+
+
 def generate_analysis_report(
     analysis,
     subscriptions: List[Subscription],
@@ -74,15 +79,6 @@ def generate_analysis_report(
         "Body", parent=styles["Normal"],
         fontSize=9, textColor=CHARCOAL, leading=14
     )
-    leak_style = ParagraphStyle(
-        "Leak", parent=styles["Normal"],
-        fontSize=28, textColor=SALE, fontName="Helvetica-Bold",
-        spaceAfter=2
-    )
-    label_style = ParagraphStyle(
-        "Label", parent=styles["Normal"],
-        fontSize=8, textColor=MUTE
-    )
 
     # ─── Header ──────────────────────────────────────────────────────────────
     elements.append(Paragraph("SubGuard", title_style))
@@ -98,40 +94,59 @@ def generate_analysis_report(
     # ─── Hero Stats ──────────────────────────────────────────────────────────
     monthly_leak = analysis.total_monthly_leak or 0
     annual_leak = monthly_leak * 12
+    score = analysis.overall_score or 0
+    sub_count = len(subscriptions)
 
-    hero_data = [
-        [
-            Paragraph(f"₹{monthly_leak:,.0f}", leak_style),
-            Paragraph(f"{analysis.overall_score}/100", ParagraphStyle(
-                "Score", parent=styles["Normal"], fontSize=28,
-                textColor=get_score_color(analysis.overall_score), fontName="Helvetica-Bold"
-            )),
-            Paragraph(str(len(subscriptions)), ParagraphStyle(
-                "Count", parent=styles["Normal"], fontSize=28,
-                textColor=INK, fontName="Helvetica-Bold"
-            )),
-        ],
-        [
-            Paragraph("Monthly Leak", label_style),
-            Paragraph("Health Score", label_style),
-            Paragraph("Subscriptions", label_style),
-        ],
+    # Build each stat as a separate cell with proper spacing
+    stat_value_style = ParagraphStyle(
+        "StatValue", parent=styles["Normal"],
+        fontSize=26, fontName="Helvetica-Bold", alignment=1,  # center
+        leading=32
+    )
+    stat_label_style = ParagraphStyle(
+        "StatLabel", parent=styles["Normal"],
+        fontSize=9, textColor=MUTE, alignment=1,  # center
+        leading=12
+    )
+
+    # Row 1: Values
+    hero_row1 = [
+        Paragraph(rupee(monthly_leak), ParagraphStyle(
+            "LeakVal", parent=stat_value_style, textColor=SALE
+        )),
+        Paragraph(f"{score}/100", ParagraphStyle(
+            "ScoreVal", parent=stat_value_style, textColor=get_score_color(score)
+        )),
+        Paragraph(str(sub_count), ParagraphStyle(
+            "CountVal", parent=stat_value_style, textColor=INK
+        )),
     ]
-    hero_table = Table(hero_data, colWidths=[2.2*inch, 2.2*inch, 2.2*inch])
+
+    # Row 2: Labels
+    hero_row2 = [
+        Paragraph("Monthly Leak", stat_label_style),
+        Paragraph("Health Score", stat_label_style),
+        Paragraph("Subscriptions Found", stat_label_style),
+    ]
+
+    hero_table = Table([hero_row1, hero_row2], colWidths=[2.2*inch, 2.2*inch, 2.2*inch])
     hero_table.setStyle(TableStyle([
         ("ALIGN", (0, 0), (-1, -1), "CENTER"),
         ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
         ("BACKGROUND", (0, 0), (-1, -1), SOFT_CLOUD),
-        ("TOPPADDING", (0, 0), (-1, 0), 16),
-        ("BOTTOMPADDING", (0, -1), (-1, -1), 12),
-        ("ROUNDEDCORNERS", [6, 6, 6, 6]),
+        # Row 1 (values) - more top padding
+        ("TOPPADDING", (0, 0), (-1, 0), 20),
+        ("BOTTOMPADDING", (0, 0), (-1, 0), 4),
+        # Row 2 (labels) - bottom padding
+        ("TOPPADDING", (0, 1), (-1, 1), 0),
+        ("BOTTOMPADDING", (0, 1), (-1, 1), 16),
     ]))
     elements.append(hero_table)
     elements.append(Spacer(1, 0.15*inch))
 
     # Annual projection
     elements.append(Paragraph(
-        f"Projected annual leak: <b>₹{annual_leak:,.0f}</b>",
+        f"Projected annual leak: <b>{rupee(annual_leak)}</b>",
         ParagraphStyle("Annual", parent=body_style, fontSize=10, textColor=SALE)
     ))
     elements.append(Spacer(1, 0.25*inch))
@@ -144,13 +159,14 @@ def generate_analysis_report(
         sub_data = [sub_header]
 
         for s in subscriptions:
-            score = s.leak_score or 0
+            leak_score = s.leak_score or 0
             action = (s.action.value if hasattr(s.action, 'value') else s.action) or "review"
+            freq = (s.frequency.value if hasattr(s.frequency, 'value') else s.frequency) or "monthly"
             sub_data.append([
                 s.merchant,
-                f"₹{s.amount:,.0f}",
-                (s.frequency.value if hasattr(s.frequency, 'value') else s.frequency) or "monthly",
-                f"{score}%",
+                rupee(s.amount),
+                freq,
+                f"{leak_score}%",
                 action.upper(),
             ])
 
@@ -185,7 +201,6 @@ def generate_analysis_report(
     # ─── AI Summary ──────────────────────────────────────────────────────────
     if ai_summary:
         elements.append(Paragraph("AI Insights", heading_style))
-        # Box around summary
         summary_data = [[Paragraph(ai_summary, body_style)]]
         summary_table = Table(summary_data, colWidths=[6.6*inch])
         summary_table.setStyle(TableStyle([
@@ -209,10 +224,11 @@ def generate_analysis_report(
         for t in transactions[:50]:
             desc = t.description[:35] + "..." if len(t.description) > 35 else t.description
             txn_type = "Credit" if (t.amount and t.amount > 0 and "credit" in str(getattr(t, 'type', '')).lower()) else "Debit"
+            date_str = t.date.strftime("%d %b %Y") if hasattr(t.date, 'strftime') else str(t.date)
             txn_data.append([
-                str(t.date.strftime("%d %b %Y") if hasattr(t.date, 'strftime') else t.date),
+                date_str,
                 desc,
-                f"₹{t.amount:,.0f}" if t.amount else "₹0",
+                rupee(t.amount) if t.amount else "Rs. 0",
                 txn_type,
             ])
 
