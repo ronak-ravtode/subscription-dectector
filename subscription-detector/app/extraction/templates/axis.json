@@ -1,0 +1,9 @@
+{
+  "bank_name": "Axis Bank",
+  "bank_code": "axis",
+  "date_format": "DD/MM/YYYY",
+  "columns": ["date", "particulars", "debit", "credit", "balance"],
+  "bank_codes_to_remove": ["UTIB", "AXIS"],
+  "UPI_PREFIXES": ["UPI", "DR", "CR"],
+  "multi_line": true
+}

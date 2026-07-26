@@ -1,0 +1,9 @@
+{
+  "bank_name": "Bank of Baroda",
+  "bank_code": "bob",
+  "date_format": "DD/MM/YYYY",
+  "columns": ["date", "description", "amount", "type", "balance"],
+  "bank_codes_to_remove": ["BARB", "BOB", "BARB0VJRANJ"],
+  "UPI_PREFIXES": ["UPI", "DR", "CR", "TO", "BY"],
+  "multi_line": true
+}

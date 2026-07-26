@@ -1,0 +1,337 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Nike Brand Colors */
+    --ink: 17 17 17;
+    --canvas: 255 255 255;
+    --soft-cloud: 245 245 245;
+    --hairline: 202 202 203;
+    --hairline-soft: 229 229 229;
+
+    /* Text hierarchy */
+    --charcoal: 57 57 59;
+    --ash: 75 75 77;
+    --mute: 112 112 114;
+    --stone: 158 158 160;
+
+    /* Semantic colors */
+    --sale: 211 0 5;
+    --sale-deep: 120 7 0;
+    --success: 0 125 72;
+    --success-bright: 30 170 82;
+    --info: 17 81 255;
+    --info-deep: 0 52 227;
+
+    /* Category accents */
+    --accent-pink: 237 26 160;
+    --accent-pink-soft: 255 176 221;
+    --accent-purple-soft: 190 175 253;
+    --accent-purple-pale: 214 209 255;
+    --accent-teal: 10 114 129;
+    --accent-pink-deep: 76 1 45;
+
+    /* Background & foreground */
+    --background: 255 255 255;
+    --foreground: 17 17 17;
+
+    /* Card */
+    --card: 255 255 255;
+    --card-foreground: 17 17 17;
+
+    /* Popover */
+    --popover: 255 255 255;
+    --popover-foreground: 17 17 17;
+
+    /* Primary */
+    --primary: 17 17 17;
+    --primary-foreground: 255 255 255;
+
+    /* Secondary */
+    --secondary: 245 245 245;
+    --secondary-foreground: 17 17 17;
+
+    /* Muted */
+    --muted: 245 245 245;
+    --muted-foreground: 112 112 114;
+
+    /* Accent */
+    --accent: 245 245 245;
+    --accent-foreground: 17 17 17;
+
+    /* Destructive */
+    --destructive: 211 0 5;
+    --destructive-foreground: 255 255 255;
+
+    /* Input */
+    --input: 202 202 203;
+
+    /* Ring */
+    --ring: 17 17 17;
+
+    /* Radius - Nike pill system */
+    --radius: 30px;
+
+    /* Spacing scale (8px base) */
+    --spacing-xxs: 2px;
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 12px;
+    --spacing-lg: 18px;
+    --spacing-xl: 24px;
+    --spacing-xxl: 30px;
+    --spacing-section: 48px;
+  }
+
+  .dark {
+    /* Dark mode - inverted Nike palette */
+    --ink: 245 245 245;
+    --canvas: 17 17 17;
+    --soft-cloud: 30 30 30;
+    --hairline: 60 60 62;
+    --hairline-soft: 45 45 47;
+
+    /* Background & foreground */
+    --background: 17 17 17;
+    --foreground: 245 245 245;
+
+    /* Card */
+    --card: 30 30 30;
+    --card-foreground: 245 245 245;
+
+    /* Popover */
+    --popover: 30 30 30;
+    --popover-foreground: 245 245 245;
+
+    /* Primary */
+    --primary: 245 245 245;
+    --primary-foreground: 17 17 17;
+
+    /* Secondary */
+    --secondary: 30 30 30;
+    --secondary-foreground: 245 245 245;
+
+    /* Muted */
+    --muted: 30 30 30;
+    --muted-foreground: 158 158 160;
+
+    /* Accent */
+    --accent: 30 30 30;
+    --accent-foreground: 245 245 245;
+
+    /* Destructive */
+    --destructive: 211 0 5;
+    --destructive-foreground: 255 255 255;
+
+    /* Input */
+    --input: 60 60 62;
+
+    /* Ring */
+    --ring: 245 245 245;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Nike animation keyframes */
+@keyframes tap-collapse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(0.5);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Animation utilities */
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.4s ease-out forwards;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.4s ease-out forwards;
+}
+
+.animate-tap-collapse {
+  animation: tap-collapse 0.2s ease-out;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg,
+      rgb(var(--muted) / 0.1) 25%,
+      rgb(var(--muted) / 0.2) 50%,
+      rgb(var(--muted) / 0.1) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s ease-in-out infinite;
+}
+
+/* Stagger animation delays */
+.stagger-1 {
+  animation-delay: 0.05s;
+}
+
+.stagger-2 {
+  animation-delay: 0.1s;
+}
+
+.stagger-3 {
+  animation-delay: 0.15s;
+}
+
+.stagger-4 {
+  animation-delay: 0.2s;
+}
+
+.stagger-5 {
+  animation-delay: 0.25s;
+}
+
+.stagger-6 {
+  animation-delay: 0.3s;
+}
+
+/* Nike typography classes */
+.font-display {
+  font-family: 'Bebas Neue', 'Anton', sans-serif;
+  text-transform: uppercase;
+  line-height: 0.9;
+}
+
+.font-heading {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-weight: 500;
+}
+
+.font-body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-weight: 400;
+}
+
+.font-mono {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* Campaign display headline */
+.display-campaign {
+  font-family: 'Bebas Neue', 'Anton', sans-serif;
+  font-size: 96px;
+  font-weight: 500;
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

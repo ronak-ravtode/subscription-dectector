@@ -1,0 +1,9 @@
+{
+  "bank_name": "Punjab National Bank",
+  "bank_code": "pnb",
+  "date_format": "DD/MM/YYYY",
+  "columns": ["date", "particulars", "withdrawal", "deposit", "balance"],
+  "bank_codes_to_remove": ["PUNB", "PNB"],
+  "UPI_PREFIXES": ["UPI", "DR", "CR"],
+  "multi_line": true
+}

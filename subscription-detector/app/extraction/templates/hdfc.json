@@ -1,0 +1,9 @@
+{
+  "bank_name": "HDFC Bank",
+  "bank_code": "hdfc",
+  "date_format": "DD/MM/YYYY",
+  "columns": ["date", "narration", "chq_no", "value_date", "withdrawal", "deposit", "balance"],
+  "narration_cleaning": true,
+  "skip_keywords": ["account", "statement", "balance", "summary", "total"],
+  "multi_line": false
+}
