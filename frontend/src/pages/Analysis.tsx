@@ -13,6 +13,7 @@ import { WarningsPanel } from "@/components/shared/WarningsPanel";
 import { TransactionTable } from "@/components/shared/TransactionTable";
 import { CategoryBreakdownTable } from "@/components/shared/CategoryBreakdownTable";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import api from "@/lib/api";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Progress } from "@/components/ui/progress";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -238,7 +239,24 @@ export default function Analysis() {
       <div className="mt-section flex justify-end gap-3">
         <Button
           variant="outline"
-          onClick={() => id && window.open(`/api/v2/reports/csv?analysis_id=${id}&type=subscriptions`, "_blank")}
+          onClick={async () => {
+            if (!id) return;
+            try {
+              const response = await api.get(`/api/v2/reports/csv?analysis_id=${id}&type=subscriptions`, {
+                responseType: "blob",
+              });
+              const url = window.URL.createObjectURL(response.data);
+              const link = document.createElement("a");
+              link.href = url;
+              link.download = `subscriptions-${id.slice(0, 8)}.csv`;
+              document.body.appendChild(link);
+              link.click();
+              document.body.removeChild(link);
+              window.URL.revokeObjectURL(url);
+            } catch (err) {
+              alert("Failed to download CSV");
+            }
+          }}
           size="lg"
         >
           <span className="flex items-center gap-2">
