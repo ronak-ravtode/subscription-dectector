@@ -2,6 +2,12 @@
 
 Detect hidden subscriptions, recurring charges, and spending leaks from your bank statements. Upload a PDF statement or forward SMS/email alerts — SubGuard analyzes transactions, identifies subscriptions, tracks price trends, and recommends cancellation actions.
 
+## Live Demo
+
+- **Frontend**: https://frontend-five-khaki-94.vercel.app
+- **Backend API**: https://subscription-dectector.onrender.com
+- **API Docs**: https://subscription-dectector.onrender.com/docs
+
 ## Features
 
 - **PDF Statement Parsing** — Extract transactions from bank PDFs (SBI, HDFC, ICICI, Axis, BOB, PNB)
